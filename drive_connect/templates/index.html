@@ -2,6 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
     <title>Google Photos Picker</title>
     <script type="text/javascript">
         // The Browser API key obtained from the Google API Console.
@@ -71,11 +73,27 @@
         // A simple callback implementation.
         function pickerCallback(data) {
             if (data.action == google.picker.Action.PICKED) {
-                console.log(data.docs);
-                const fileList = [];
-                data.docs.forEach(item => fileList.push(item.id))
+                const file_list = [];
+                data.docs.forEach(item => file_list.push(item.id))
+
+                var fileData = {
+                    fileList: file_list,
+                    token: oauthToken
+                }
+
                 $.ajax({
-                    url: 'http://localhost:8000/uploads/',
+                    url: 'http://localhost:8000/upload/',
+                    type: 'POST',
+                    data: JSON.stringify(fileData),
+                    cache: false,
+                    processData: false,
+                    contentType: 'application/json',
+                    success: function(data) {
+                        console.log("Success!")
+                    },
+                    error: function() {
+                        console.log("error")
+                    }
                 })
             }
         }

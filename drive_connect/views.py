@@ -43,11 +43,14 @@ class FileUploadViewSet(views.APIView):
             # Try to download the file
             request = drive_service.files().get_media(fileId=file_id)
             fh = io.BytesIO()
+            #fh = io.FileIO(file_id + ".jpg", "wb") for local download
+
             downloader = MediaIoBaseDownload(fh, request)
             done = False
             while done is False:
                 status, done = downloader.next_chunk()
                 print("Download %d%%." % int(status.progress() * 100))
+            
 
         return Response(data=serializer.validated_data,
                         status=status.HTTP_200_OK)
