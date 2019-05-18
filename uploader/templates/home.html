@@ -103,7 +103,7 @@
     }
   }
 </script>
-{% endblock %} {% block body %}
+{% endblock %} {% block body %} {% if user.is_authenticated %}
 <div class="container" style="height: 100%; text-align: center">
   <button
     class="btn btn-outline-success my-2 my-sm-2"
@@ -114,4 +114,4 @@
     Connect to Google
   </button>
 </div>
-{% endblock %}
+{% endif %} {% endblock %}

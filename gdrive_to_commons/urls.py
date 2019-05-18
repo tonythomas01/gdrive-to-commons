@@ -17,6 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
 
+from gdrive_to_commons.views import UserLogoutView
 from uploader.views import HomePageView
 
 urlpatterns = [
@@ -25,4 +26,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     url(r"^api-auth/", include("rest_framework.urls")),
     url(r"oauth/", include("social_django.urls", namespace="social")),
+    url(r"logout/", UserLogoutView.as_view(), name="logout"),
 ]
