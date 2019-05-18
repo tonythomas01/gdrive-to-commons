@@ -116,11 +116,9 @@ USE_TZ = True
 STATIC_URL = "/static/"
 from gdrive_to_commons.local_settings import *
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "assets"),
-]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "assets")]
 
 
 # All settings common to all environments
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+STATIC_ROOT = os.path.join(PROJECT_ROOT, "static")
