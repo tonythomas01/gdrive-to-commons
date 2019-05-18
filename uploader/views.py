@@ -12,7 +12,7 @@ from uploader.serializers import GooglePhotosUploadInputSerializer
 
 
 class HomePageView(TemplateView):
-    template_name = "index.html"
+    template_name = "home.html"
 
     def get_context_data(self, **kwargs):
         context = super(HomePageView, self).get_context_data()
@@ -39,7 +39,7 @@ class FileUploadViewSet(views.APIView):
             access_token=validated_data.get("token", None)
         )
         for file in file_list:
-            request = drive_service.files().get_media(fileId=file['id'])
+            request = drive_service.files().get_media(fileId=file["id"])
             fh = io.BytesIO()
 
             downloader = MediaIoBaseDownload(fh, request)
