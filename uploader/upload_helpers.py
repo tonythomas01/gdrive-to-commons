@@ -5,7 +5,7 @@ import requests
 from gdrive_to_commons import settings
 
 
-def upload_files_to_commons():
+def upload_files_to_commons(user_access_token=None):
     s = requests.session()
     url = settings.WIKI_URL
 

@@ -40,7 +40,10 @@ class FileUploadViewSet(views.APIView):
         drive_service = self.get_google_drive_service(
             access_token=validated_data.get("token", None)
         )
+        social_auth = self.request.user.social_auth.get(provider="mediawiki")
+        user_access_token = social_auth.extra_data["access_token"]
 
+        # Use this user_access_token to upload to commons later.
         if not os.path.exists("tmp/"):
             os.mkdir("tmp")
 
@@ -55,5 +58,5 @@ class FileUploadViewSet(views.APIView):
                 download_status, done = downloader.next_chunk()
                 print("Download %d%%." % int(download_status.progress() * 100))
 
-        upload_files_to_commons()
+        upload_files_to_commons(user_access_token)
         return Response(data=serializer.validated_data, status=status.HTTP_200_OK)
