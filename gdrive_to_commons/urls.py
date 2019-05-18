@@ -22,8 +22,8 @@ import drive_connect
 from drive_connect.views import HomePageView, FileUploadViewSet
 
 urlpatterns = [
-    path('', HomePageView.as_view(), name='home'),
-    url(r'^upload/', include('drive_connect.urls')),
-    path('admin/', admin.site.urls),
-    url(r'^api-auth/', include('rest_framework.urls'))
+    path("", HomePageView.as_view(), name="home"),
+    url(r"^upload/", include("drive_connect.urls")),
+    path("admin/", admin.site.urls),
+    url(r"^api-auth/", include("rest_framework.urls")),
 ]

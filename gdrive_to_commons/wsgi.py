@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'gdrive_to_commons.settings')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "gdrive_to_commons.settings")
 
 application = get_wsgi_application()
