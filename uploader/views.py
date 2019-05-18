@@ -1,6 +1,7 @@
 import io
 import os
 
+import mwclient as mwclient
 from django.conf import settings
 from django.views.generic import TemplateView
 from google.oauth2.credentials import Credentials
@@ -40,8 +41,17 @@ class FileUploadViewSet(views.APIView):
         drive_service = self.get_google_drive_service(
             access_token=validated_data.get("token", None)
         )
-        social_auth = self.request.user.social_auth.get(provider="mediawiki")
-        user_access_token = social_auth.extra_data["access_token"]
+        social_auth = self.request.user.social_auth.get(
+            provider="mediawiki"
+        ).extra_data["access_token"]
+
+        mw_site = mwclient.Site(
+            host=settings.WIKI_URL,
+            consumer_secret=settings.SOCIAL_AUTH_MEDIAWIKI_SECRET,
+            consumer_token=settings.SOCIAL_AUTH_MEDIAWIKI_KEY,
+            access_token=social_auth.get("oauth_token", None),
+            access_secret=social_auth.get("oauth_token_secret", None),
+        )
 
         # Use this user_access_token to upload to commons later.
         if not os.path.exists("tmp/"):
@@ -58,5 +68,5 @@ class FileUploadViewSet(views.APIView):
                 download_status, done = downloader.next_chunk()
                 print("Download %d%%." % int(download_status.progress() * 100))
 
-        upload_files_to_commons(user_access_token)
+        upload_files_to_commons(mw_site)
         return Response(data=serializer.validated_data, status=status.HTTP_200_OK)
