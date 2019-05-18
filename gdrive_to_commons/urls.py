@@ -16,14 +16,13 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import routers
 
-import drive_connect
-from drive_connect.views import HomePageView, FileUploadViewSet
+from uploader.views import HomePageView
 
 urlpatterns = [
-    path("", HomePageView.as_view(), name="home"),
-    url(r"^upload/", include("drive_connect.urls")),
+    path("", HomePageView.as_view(), name="home_page"),
+    url(r"^upload/", include("uploader.urls")),
     path("admin/", admin.site.urls),
     url(r"^api-auth/", include("rest_framework.urls")),
+    url(r"oauth/", include("social_django.urls", namespace="social")),
 ]

@@ -8,7 +8,7 @@ from googleapiclient.http import MediaIoBaseDownload
 from rest_framework import views, status
 from rest_framework.response import Response
 
-from drive_connect.serializers import GooglePhotosUploadInputSerializer
+from uploader.serializers import GooglePhotosUploadInputSerializer
 
 
 class HomePageView(TemplateView):
