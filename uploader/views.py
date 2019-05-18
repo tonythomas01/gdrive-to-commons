@@ -38,8 +38,8 @@ class FileUploadViewSet(views.APIView):
         drive_service = self.get_google_drive_service(
             access_token=validated_data.get("token", None)
         )
-        for file_id in file_list:
-            request = drive_service.files().get_media(fileId=file_id)
+        for file in file_list:
+            request = drive_service.files().get_media(fileId=file['id'])
             fh = io.BytesIO()
 
             downloader = MediaIoBaseDownload(fh, request)

@@ -92,12 +92,17 @@
       function pickerCallback(data) {
         if (data.action == google.picker.Action.PICKED) {
           const file_list = [];
-          data.docs.forEach(item => file_list.push(item.id));
+
+          data.docs.forEach(item => file_list.push({
+            'name': item.name,
+            'id': item.id
+          }));
 
           var fileData = {
             fileList: file_list,
             token: oauthToken
           };
+
           $.ajax({
             url: "http://localhost:8000/upload/",
             type: "POST",
