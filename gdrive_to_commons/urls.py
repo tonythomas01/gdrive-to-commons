@@ -29,4 +29,4 @@ urlpatterns = [
     url(r"^api-auth/", include("rest_framework.urls")),
     url(r"oauth/", include("social_django.urls", namespace="social")),
     url(r"logout/", UserLogoutView.as_view(), name="logout"),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL_DEPLOYMENT, document_root=settings.STATIC_ROOT)
