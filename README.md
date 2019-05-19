@@ -1,5 +1,5 @@
-# gdrive_to_commons
-Google drive to commons
+# Google drive to Wikimedia Commons
+Upload your files directly from Google drive to Wikimedia Commons.  
 
 # Steps:
 1. Create virtual env (based on python 3.7.1). 
