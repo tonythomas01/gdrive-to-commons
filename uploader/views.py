@@ -59,8 +59,6 @@ class FileUploadViewSet(views.APIView):
             done = False
             while done is False:
                 download_status, done = downloader.next_chunk()
-            wiki_uploader.upload_file(
-                file_name=file["name"], file_stream=fh, description=file["description"]
-            )
+            wiki_uploader.upload_file(file_name=file["name"], file_stream=fh)
 
         return Response(data=serializer.validated_data, status=status.HTTP_200_OK)
