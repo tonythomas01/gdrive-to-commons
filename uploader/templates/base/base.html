@@ -26,8 +26,8 @@
     {% block scripts %} {% endblock %}
   </head>
   <body>
-    {% if user.is_authenticated %} {% block navigation_bar %}
-        {% include 'base/navbar.html' %} {% endblock %} {% endif %}
+    {% if user.is_authenticated %} {% block navigation_bar %} {% include
+    'base/navbar.html' %} {% endblock %} {% endif %}
 
     <div class="container">
       <div class="row">
@@ -72,11 +72,22 @@
                   type="button"
                   onclick="uploadFiles()"
                 >
-                  Review and upload files to Wikimedia Commons
+                  Upload to Wikimedia Commons <i class="fas fa-caret-right"></i>
                 </button>
                 <hr class="my-4" />
                 <h5 class="card-title text-center">
-                  Step 3/3
+                  <div class="progress">
+                    <div
+                      class="progress-bar"
+                      role="progressbar"
+                      style="width: 75%"
+                      aria-valuenow="75"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    >
+                      75%
+                    </div>
+                  </div>
                 </h5>
               </form>
             </div>
@@ -116,7 +127,8 @@
                   type="button"
                   onclick="loadPicker()"
                 >
-                  Choose photos from your Google Drive
+                  Choose photos from Google Drive
+                  <i class="fas fa-caret-right"></i>
                 </button>
                 {% else %}
                 <a href="{% url 'social:begin' 'mediawiki' %}">
@@ -125,14 +137,42 @@
                     type="button"
                   >
                     Login to Wikimedia Commons
+                    <i
+                      class="fas
+                    fa-caret-right fa-1x"
+                    ></i>
                   </button>
                 </a>
                 {% endif %}
 
                 <hr class="my-4" />
                 <h5 class="card-title text-center">
-                  {% if user.is_authenticated %} Step 2/3 {% else %} Step 1/3
+                  <div class="progress">
+                    {% if user.is_authenticated %}
+                    <div
+                      class="progress-bar"
+                      role="progressbar"
+                      style="width: 50%"
+                      aria-valuenow="50"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    >
+                      50%
+                    </div>
+                    {% else %}
+
+                    <div
+                      class="progress-bar"
+                      role="progressbar"
+                      style="width: 25%"
+                      aria-valuenow="25"
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    >
+                      25%
+                    </div>
                     {% endif %}
+                  </div>
                 </h5>
               </form>
             </div>
@@ -147,11 +187,33 @@
                   <h5 class="card-title text-center">
                     OoOoOoOO! That's it. And, here are some GOATS for you!!!
                   </h5>
-
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/f/f6/Baby_Goat_in_Margarita_Island%2C_Venezuela.jpg"
                     width="400px"
                   />
+                  <div
+                    class="results-panel"
+                    style="text-align:
+                            center"
+                  >
+                    The files that you uploaded are now available on Wikimedia
+                    Commons!
+                  </div>
+                  <hr class="my-4" />
+                  <h5 class="card-title text-center">
+                    <div class="progress">
+                      <div
+                        class="progress-bar"
+                        role="progressbar"
+                        style="width: 100%"
+                        aria-valuenow="100"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      >
+                        100%
+                      </div>
+                    </div>
+                  </h5>
                 </div>
               </div>
             </div>
@@ -285,6 +347,7 @@
       }
 
       var csrftoken = getCookie("csrftoken");
+
       function csrfSafeMethod(method) {
         // these HTTP methods do not require CSRF protection
         return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
@@ -306,6 +369,11 @@
           $(".step-3").hide();
           $(".step-1-2").hide();
           $(".step-4").show();
+          data.forEach(function(item) {
+            $(".results-panel").append(
+              "<p><a href=" + item.url + "</a>" + item.url + "</p><br/>"
+            );
+          });
         },
         error: function() {
           console.log("error");

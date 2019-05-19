@@ -1,6 +1,5 @@
 import io
 
-import mwclient as mwclient
 from django.conf import settings
 from django.views.generic import TemplateView
 from google.oauth2.credentials import Credentials
@@ -51,7 +50,7 @@ class FileUploadViewSet(views.APIView):
             access_token=social_auth.get("oauth_token", None),
             access_secret=social_auth.get("oauth_token_secret", None),
         )
-
+        uploaded_results = []
         for file in file_list:
             request = drive_service.files().get_media(fileId=file["id"])
             fh = io.BytesIO()
@@ -59,6 +58,10 @@ class FileUploadViewSet(views.APIView):
             done = False
             while done is False:
                 download_status, done = downloader.next_chunk()
-            wiki_uploader.upload_file(file_name=file["name"], file_stream=fh)
+            uploaded, image_info = wiki_uploader.upload_file(
+                file_name=file["name"], file_stream=fh
+            )
+            if uploaded:
+                uploaded_results.append(image_info)
 
-        return Response(data=serializer.validated_data, status=status.HTTP_200_OK)
+        return Response(data=uploaded_results, status=status.HTTP_200_OK)

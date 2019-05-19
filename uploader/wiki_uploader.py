@@ -39,4 +39,8 @@ class WikiUploader(object):
         )
         print(debug_information)
         logging.debug(debug_information)
-        return True
+        upload_response = upload_result.get("result")
+        if not upload_response == "Success":
+            return False, {}
+        else:
+            return True, upload_result["imageinfo"]
