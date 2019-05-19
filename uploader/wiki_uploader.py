@@ -31,7 +31,7 @@ class WikiUploader(object):
             file=file_stream,
             filename=unique_filename,
             description=description,
-            ignore=False,
+            ignore=True,
             comment="Uploaded with Google drive to commons.",
         )
         debug_information = "Uploaded: {0} to: {1}, more information: {2}".format(
