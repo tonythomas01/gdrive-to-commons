@@ -37,7 +37,6 @@ class WikiUploader(object):
         debug_information = "Uploaded: {0} to: {1}, more information: {2}".format(
             unique_filename, self.mw_client.host, upload_result
         )
-        print(debug_information)
         logging.debug(debug_information)
         upload_response = upload_result.get("result")
         if not upload_response == "Success":
