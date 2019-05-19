@@ -9,6 +9,8 @@
       href="{% static 'css/bootstrap.min.css' %}"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"/>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script
       src="{% static 'js/popper.min.js' %}"
@@ -21,8 +23,42 @@
     {% block scripts %} {% endblock %}
   </head>
   <body>
-    {% block navigation_bar %} {% include 'base/navbar.html' %} {% endblock %}
-    {% block body %} {% endblock %}
-    {% block footer %} {% include 'base/footer.html' %} {% endblock footer %}
+    {% if user.is_authenticated %}
+    {% block navigation_bar %} 
+    {% include 'base/navbar.html' %} 
+    {% endblock %}
+    {% endif %}
+
+    <div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <div class="row logo-row col-xs-12">
+              <div class="col-xs-4">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Google_Drive_Logo.svg" width="100px"/>
+              </div>
+              <div class="col-xs-4">
+                  <i class="fas fa-caret-right"></i>
+              </div>
+              <div class="col-xs-4">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Commons-logo.svg" height="100px"/>
+              </div>
+            </div>
+
+            <h5 class="app-desc text-center">Upload your photos from Google Drive to Wikimedia Commons in three easy steps!</h5>
+
+            <form class="form-signin">
+              <a href="{% url 'social:begin' 'mediawiki' %}">
+                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="button">Login to Wikimedia Commons
+                </button></a>
+              <hr class="my-4">
+              <h5 class="card-title text-center">Step 1</h5>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   </body>
 </html>
