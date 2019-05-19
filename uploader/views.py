@@ -1,5 +1,4 @@
 import io
-import os
 
 import mwclient as mwclient
 from django.conf import settings
@@ -11,7 +10,7 @@ from rest_framework import views, status
 from rest_framework.response import Response
 
 from uploader.serializers import GooglePhotosUploadInputSerializer
-from uploader.upload_helpers import upload_files_to_commons
+from uploader.wiki_uploader import WikiUploader
 
 
 class HomePageView(TemplateView):
@@ -45,7 +44,7 @@ class FileUploadViewSet(views.APIView):
             provider="mediawiki"
         ).extra_data["access_token"]
 
-        mw_site = mwclient.Site(
+        wiki_uploader = WikiUploader(
             host=settings.WIKI_URL,
             consumer_secret=settings.SOCIAL_AUTH_MEDIAWIKI_SECRET,
             consumer_token=settings.SOCIAL_AUTH_MEDIAWIKI_KEY,
@@ -53,20 +52,15 @@ class FileUploadViewSet(views.APIView):
             access_secret=social_auth.get("oauth_token_secret", None),
         )
 
-        # Use this user_access_token to upload to commons later.
-        if not os.path.exists("tmp/"):
-            os.mkdir("tmp")
-
         for file in file_list:
             request = drive_service.files().get_media(fileId=file["id"])
-            file_ext = os.path.splitext(file["name"])[1]
-            fh = io.FileIO("tmp/" + file["id"] + file_ext, "wb")
-
+            fh = io.BytesIO()
             downloader = MediaIoBaseDownload(fh, request)
             done = False
             while done is False:
                 download_status, done = downloader.next_chunk()
-                print("Download %d%%." % int(download_status.progress() * 100))
+            wiki_uploader.upload_file(
+                file_name=file["name"], file_stream=fh, description=file["description"]
+            )
 
-        upload_files_to_commons(mw_site)
         return Response(data=serializer.validated_data, status=status.HTTP_200_OK)

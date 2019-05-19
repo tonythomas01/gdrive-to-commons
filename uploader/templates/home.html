@@ -73,7 +73,7 @@
   function pickerCallback(data) {
     if (data.action == google.picker.Action.PICKED) {
       const file_list = [];
-
+      console.log(data.docs);
       data.docs.forEach(item =>
         file_list.push({
           name: item.name,
