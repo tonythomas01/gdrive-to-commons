@@ -1,1 +1,348 @@
-{% extends 'base/base.html' %}
+{% extends 'base/base.html' %} {% load static %} {% block body %}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 mx-auto step-3">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <div class="row logo-row col-xs-12">
+            <div class="col-xs-4">
+              <img
+                src="{% static 'svg/Google_Drive_Logo.svg' %}"
+                width="100px"
+              />
+            </div>
+            <div class="col-xs-4">
+              <i class="fas fa-caret-right"></i>
+            </div>
+            <div class="col-xs-4">
+              <img src="{% static 'svg/Commons-logo.svg' %}" height="100px" />
+            </div>
+          </div>
+
+          <h5 class="app-desc text-center">Your selected file(s):</h5>
+          <div class="table-responsive">
+            <table class="table files-table">
+              <thead>
+                <tr>
+                  <th scope="col">Thumbnail</th>
+                  <th scope="col">Filename</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Edit</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+
+          <form class="form-signin">
+            <button
+              class="btn btn-lg btn-primary btn-block text-uppercase"
+              type="button"
+              onclick="uploadFiles()"
+            >
+              Upload to Wikimedia Commons <i class="fas fa-caret-right"></i>
+            </button>
+            <hr class="my-4" />
+            <h5 class="card-title text-center">
+              <div class="progress">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  style="width: 75%"
+                  aria-valuenow="75"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  75%
+                </div>
+              </div>
+            </h5>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto step-1-2">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <div class="row logo-row col-xs-12">
+            <div class="col-xs-4">
+              <img
+                src="{% static 'svg/Google_Drive_Logo.svg' %}"
+                width="100px"
+              />
+            </div>
+            <div class="col-xs-4">
+              <i class="fas fa-caret-right"></i>
+            </div>
+            <div class="col-xs-4">
+              <img src="{% static 'svg/Commons-logo.svg' %}" height="100px" />
+            </div>
+          </div>
+
+          <h5 class="app-desc text-center">
+            Upload your photos from Google Drive to Wikimedia Commons in three
+            easy steps!
+          </h5>
+
+          <form class="form-signin">
+            {% if user.is_authenticated %}
+            <button
+              class="btn btn-lg btn-primary btn-block text-uppercase"
+              type="button"
+              onclick="loadPicker()"
+            >
+              Choose photos from Google Drive
+              <i class="fas fa-caret-right"></i>
+            </button>
+            {% else %}
+            <a href="{% url 'social:begin' 'mediawiki' %}">
+              <button
+                class="btn btn-lg btn-primary btn-block text-uppercase"
+                type="button"
+              >
+                Login to Wikimedia Commons
+                <i
+                  class="fas
+                    fa-caret-right fa-1x"
+                ></i>
+              </button>
+            </a>
+            {% endif %}
+
+            <hr class="my-4" />
+            <h5 class="card-title text-center">
+              <div class="progress">
+                {% if user.is_authenticated %}
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  style="width: 50%"
+                  aria-valuenow="50"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  50%
+                </div>
+                {% else %}
+
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  style="width: 25%"
+                  aria-valuenow="25"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  25%
+                </div>
+                {% endif %}
+              </div>
+            </h5>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto step-4">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <div class="row logo-row col-xs-12">
+            <div class="col-xs-4">
+              <h5 class="card-title text-center">
+                OoOoOoOO! That's it. And, here are some GOATS for you!!!
+              </h5>
+              <img
+                src="{% static 'jpg/Baby_Goat_in_Margarita_Island,_Venezuela.jpg' %}"
+                width="400px"
+              />
+              <div
+                class="results-panel"
+                style="text-align:
+                            center"
+              >
+                The files that you uploaded are now available on Wikimedia
+                Commons!
+              </div>
+              <hr class="my-4" />
+              <h5 class="card-title text-center">
+                <div class="progress">
+                  <div
+                    class="progress-bar"
+                    role="progressbar"
+                    style="width: 100%"
+                    aria-valuenow="100"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  >
+                    100%
+                  </div>
+                </div>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %} {% block scripts %}
+<script type="text/javascript" src="{% static 'js/gapi.js' %}"></script>
+<script type="text/javascript">
+  $(".step-3").hide();
+  $(".step-4").hide();
+  // The Browser API key obtained from the Google API Console.
+  // Replace with your own Browser API key, or your own key.
+  var file_list = [];
+  var developerKey = "{{ developer_key }}";
+
+  // The Client ID obtained from the Google API Console. Replace with your own Client ID.
+  var clientId = "{{ client_id }}";
+
+  // Replace with your own project number from console.developers.google.com.
+  // See "Project number" under "IAM & Admin"     > "Settings"
+  var appId = "{{ google_app_id }}";
+
+  // Scope to use to access user's Drive items.
+  var scope = ["https://www.googleapis.com/auth/drive.readonly"];
+
+  var pickerApiLoaded = false;
+  var oauthToken;
+
+  // Use the Google API Loader script to load the google.picker script.
+  function loadPicker() {
+    gapi.load("auth", { callback: onAuthApiLoad });
+    gapi.load("picker", { callback: onPickerApiLoad });
+  }
+
+  function onAuthApiLoad() {
+    window.gapi.auth.authorize(
+      {
+        client_id: clientId,
+        scope: scope,
+        immediate: false
+      },
+      handleAuthResult
+    );
+  }
+
+  function onPickerApiLoad() {
+    pickerApiLoaded = true;
+    createPicker();
+  }
+
+  function handleAuthResult(authResult) {
+    if (authResult && !authResult.error) {
+      oauthToken = authResult.access_token;
+      createPicker();
+    }
+  }
+
+  // Create and render a Picker object for searching images.
+  function createPicker() {
+    if (pickerApiLoaded && oauthToken) {
+      var view = new google.picker.View(google.picker.ViewId.DOCS);
+      view.setMimeTypes("image/png,image/jpeg,image/jpg");
+      var picker = new google.picker.PickerBuilder()
+        .enableFeature(google.picker.Feature.NAV_HIDDEN)
+        .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
+        .setAppId(appId)
+        .setOAuthToken(oauthToken)
+        .addView(view)
+        .addView(new google.picker.DocsUploadView())
+        .setDeveloperKey(developerKey)
+        .setCallback(pickerCallback)
+        .build();
+      picker.setVisible(true);
+    }
+  }
+
+  // A simple callback implementation.
+  function pickerCallback(data) {
+    if (data.action == google.picker.Action.PICKED) {
+      data.docs.forEach(item =>
+        file_list.push({
+          name: item.name,
+          id: item.id,
+          thumbnail: item.iconUrl,
+          description: item.description
+        })
+      );
+
+      $(".step-3").show();
+      $(".step-1-2").hide();
+
+      for (var i = file_list.length - 1; i >= 0; i--) {
+        $(".files-table").append(
+          '<tr><td><img src="' +
+            file_list[i].thumbnail +
+            '"/></td><td>' +
+            file_list[i].name +
+            "</td><td>" +
+            file_list[i].description +
+            '</td><td><i class="fas fa-edit"></i></td></tr>'
+        );
+      }
+    }
+  }
+
+  function uploadFiles() {
+    var fileData = {
+      fileList: file_list,
+      token: oauthToken
+    };
+
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== "") {
+        var cookies = document.cookie.split(";");
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === name + "=") {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+
+    var csrftoken = getCookie("csrftoken");
+
+    function csrfSafeMethod(method) {
+      // these HTTP methods do not require CSRF protection
+      return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
+    }
+
+    $.ajax({
+      url: "http://localhost:8000/upload/",
+      type: "POST",
+      data: JSON.stringify(fileData),
+      cache: false,
+      processData: false,
+      contentType: "application/json",
+      beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+      },
+      success: function(data) {
+        $(".step-3").hide();
+        $(".step-1-2").hide();
+        $(".step-4").show();
+        $(".results-panel").append("<ol>");
+        data.forEach(function(item) {
+          $(".results-panel").append(
+            "<li><a href='" + item.url + "'</a>" + item.canonicaltitle + "</li>"
+          );
+        });
+        $(".results-panel").append("</ol>");
+      },
+      error: function() {
+        console.log("error");
+      }
+    });
+  }
+</script>
+{% endblock scripts %}
