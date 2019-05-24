@@ -316,7 +316,8 @@
     }
 
     $.ajax({
-      url: "http://localhost:8000/upload/",
+      // prettier-ignore
+      url: "{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url 'file_upload' %}",
       type: "POST",
       data: JSON.stringify(fileData),
       cache: false,
