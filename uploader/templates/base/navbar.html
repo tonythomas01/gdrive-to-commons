@@ -1,11 +1,10 @@
 {% load static %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Google Drive to Commons</a>
+  <a class="navbar-brand" href="{% url 'home_page' %}">GDrive to Commons</a>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    {% if user.is_authenticated %}
-
     <ul class="navbar-nav right">
+      {% if user.is_authenticated %}
       <li class="nav-item dropdown">
         <a
           class="nav-link dropdown-toggle"
@@ -16,18 +15,22 @@
           aria-haspopup="true"
           aria-expanded="false"
         >
-          Welcome, {{ user.username }}!
+          {{ user.username }}
         </a>
 
         <div
           class="dropdown-menu"
           aria-labelledby="navbarDropdown"
-          style="width: 100%"
+          style="width: 80%"
         >
           <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
         </div>
       </li>
+      {% else %}
+      <li class="nav-item">
+        anonymous
+      </li>
+      {% endif %}
     </ul>
-    {% endif %}
   </div>
 </nav>

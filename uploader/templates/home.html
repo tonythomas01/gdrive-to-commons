@@ -80,8 +80,7 @@
           </div>
 
           <h5 class="app-desc text-center">
-            Upload your photos from Google Drive to Wikimedia Commons in three
-            easy steps!
+            Upload your photos from Google Drive to Wikimedia Commons!
           </h5>
 
           <form class="form-signin">
@@ -95,7 +94,10 @@
               <i class="fas fa-caret-right"></i>
             </button>
             {% else %}
-            <a href="{% url 'social:begin' 'mediawiki' %}">
+            <a
+              href="{% url 'social:begin' 'mediawiki' %}"
+              style="text-decoration: none"
+            >
               <button
                 class="btn btn-lg btn-primary btn-block text-uppercase"
                 type="button"

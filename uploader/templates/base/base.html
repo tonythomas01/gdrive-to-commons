@@ -23,17 +23,27 @@
   </head>
   <body>
     <!-- prettier-ignore -->
-    {% if user.is_authenticated %}
-    <!-- prettier-ignore -->
     {% block navigation_bar %}
     <!-- prettier-ignore -->
     {% include 'base/navbar.html' %}
     <!-- prettier-ignore -->
     {% endblock %}
     <!-- prettier-ignore -->
-    {% endif %}
+    <main class="container-main" role="main" style="padding-bottom: 5%">
     <!-- prettier-ignore -->
     {% block body %} {% endblock body %}
+    <!-- prettier-ignore -->
+</main>
+    <!-- prettier-ignore -->
+    <footer class="footer footer-bottom">
+    {% block footer %}
+
+        <!-- prettier-ignore -->
+        {% include 'base/footer.html' %}
+        <!-- prettier-ignore -->
+
+    {% endblock footer %}
+</footer>
   </body>
   {% block scripts %} {% endblock %}
 </html>

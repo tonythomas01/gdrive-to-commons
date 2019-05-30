@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
-from gdrive_to_commons.views import UserLogoutView
+from gdrive_to_commons.views import UserLogoutView, PrivacyPolicyTemplateView
 from uploader.views import HomePageView
 
 urlpatterns = [
@@ -29,4 +29,5 @@ urlpatterns = [
     url(r"^api-auth/", include("rest_framework.urls")),
     url(r"oauth/", include("social_django.urls", namespace="social")),
     url(r"logout/", UserLogoutView.as_view(), name="logout"),
+    url(r"privacy-policy/", PrivacyPolicyTemplateView.as_view(), name="privacy_policy"),
 ] + static(settings.STATIC_URL_DEPLOYMENT, document_root=settings.STATIC_ROOT)
