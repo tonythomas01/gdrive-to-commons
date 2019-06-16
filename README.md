@@ -39,7 +39,7 @@ your machine, or use `pyenv` as described later in this documentation.
    `(gdrive-env-3.5.3) gdrive_to_commons/$ pre-commit install`
 4. There are some `localsettings` you need to have as part of running the
    server. You can copy a template using:
-   `(gdrive-env-3.5.3) gdrive_to_commons/$ cp gdrive_to_commons/local_settings_sample.py local_settings.py`
+   `(gdrive-env-3.5.3) gdrive_to_commons/$ cp gdrive_to_commons/local_settings_sample.py gdrive_to_commons/local_settings.py`
    You need to modify the values there to use the applicaiton in full.
 5. Run the Django standard runserver steps:
    ```
