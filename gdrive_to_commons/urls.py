@@ -20,14 +20,15 @@ from django.contrib import admin
 from django.urls import path, include
 
 from gdrive_to_commons.views import UserLogoutView, PrivacyPolicyTemplateView
-from uploader.views import HomePageView
+from uploader.views import HomePageView, UploadPageView
 
 urlpatterns = [
     path("", HomePageView.as_view(), name="home_page"),
-    url(r"^upload/", include("uploader.urls")),
+    url(r"upload/", UploadPageView.as_view(), name="upload_page"),
+    url(r"privacy-policy/", PrivacyPolicyTemplateView.as_view(), name="privacy_policy"),
+    url(r"logout/", UserLogoutView.as_view(), name="logout"),
     path("admin/", admin.site.urls),
     url(r"^api-auth/", include("rest_framework.urls")),
     url(r"oauth/", include("social_django.urls", namespace="social")),
-    url(r"logout/", UserLogoutView.as_view(), name="logout"),
-    url(r"privacy-policy/", PrivacyPolicyTemplateView.as_view(), name="privacy_policy"),
+    url(r"^api/v1.0/upload/", include("uploader.urls")),
 ] + static(settings.STATIC_URL_DEPLOYMENT, document_root=settings.STATIC_ROOT)

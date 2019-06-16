@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 
 
 class UserLogoutView(LogoutView):
-    template_name = "home.html"
+    template_name = "upload.html"
 
 
 class PrivacyPolicyTemplateView(TemplateView):

@@ -15,8 +15,12 @@ from uploader.wiki_uploader import WikiUploader
 class HomePageView(TemplateView):
     template_name = "home.html"
 
+
+class UploadPageView(TemplateView):
+    template_name = "upload.html"
+
     def get_context_data(self, **kwargs):
-        context = super(HomePageView, self).get_context_data()
+        context = super(UploadPageView, self).get_context_data()
         context["developer_key"] = settings.GOOGLE_API_DEV_KEY
         context["client_id"] = settings.GOOGLE_CLIENT_ID
         context["google_app_id"] = settings.GOOGLE_APP_ID
