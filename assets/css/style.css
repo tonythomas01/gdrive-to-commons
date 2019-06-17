@@ -8,6 +8,53 @@ body {
   background: linear-gradient(to right, #0062e6, #33aeff);
 }
 
+.home-card {
+  border: none;
+  text-align: center;
+}
+
+.home-card .fas {
+  font-size: 60px;
+  color: #007bff;
+}
+
+.home-card .card-step {
+  margin-bottom: 0.5rem;
+  margin-top: 2rem;
+  height: 45px;
+  width: 45px;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  background-color: rgba(0, 0, 0, 0.03);
+  border-radius: 50%;
+  display: inline-block;
+  color: dimgrey;
+  line-height: 40px;
+  font-weight: 700;
+}
+
+.home-card p {
+  font-size: 1.1em;
+}
+
+.agreement-content {
+  padding: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  background-color: rgba(0, 0, 0, 0.03);
+  border-radius: 10px;
+}
+
+.agreement-content h4 {
+  text-align: center;
+  margin-bottom: 1.1rem;
+}
+
+.agreement-form {
+  margin: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .card-signin {
   border: 0;
   border-radius: 1rem;
@@ -28,7 +75,7 @@ body {
   width: 100%;
 }
 
-.form-signin .btn {
+.btn-primary {
   font-size: 80%;
   border-radius: 5rem;
   letter-spacing: 0.1rem;
