@@ -112,7 +112,7 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, "static")
 
 
 LOGIN_URL = "login"
-LOGIN_REDIRECT_URL = "home_page"
+LOGIN_REDIRECT_URL = "upload_page"
 LOGOUT_REDIRECT_URL = "home_page"
 SOCIAL_AUTH_URL_NAMESPACE = "social"
 
