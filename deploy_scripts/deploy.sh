@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-
-ssh ${DEPLOY_UESR}@${DEPLOY_HOST_BASTION}
+ssh -o "StrictHostKeyChecking=no" -i /tmp/deploy_rsa -A ${DEPLOY_UESR}@${DEPLOY_HOST_BASTION}
 become ${APP_NAME_ON_TOOLFORGE}
 source /data/project/google-drive-photos-to-commons/www/python/venv/bin/activate
 cd /data/project/google-drive-photos-to-commons/www/python/src
