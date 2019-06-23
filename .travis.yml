@@ -11,7 +11,7 @@ env:
   matrix:
     - DJANGO=2.2.1 DB=mysql
 install:
-  - pip install -q -r requirements.txt
+  - pip install -q -r requirements-deploy.txt
 before_script:
   - mv gdrive_to_commons/local_settings_travis.py gdrive_to_commons/local_settings.py
   - mysql -e 'create database travis_ci_db;'
