@@ -104,8 +104,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = "/google-drive-photos-to-commons/static/"
-from gdrive_to_commons.local_settings import *
-
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "assets")]
 
 # All settings common to all environments
@@ -117,3 +115,5 @@ LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "home_page"
 LOGOUT_REDIRECT_URL = "home_page"
 SOCIAL_AUTH_URL_NAMESPACE = "social"
+
+from gdrive_to_commons.local_settings import *

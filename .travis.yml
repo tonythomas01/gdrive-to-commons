@@ -19,7 +19,7 @@ install:
   - pip install -q -r requirements.txt
 
 before_script:
-  - cp gdrive_to_commons/local_settings_travis.py gdrive_to_commons/local_settings.py
+  - mv gdrive_to_commons/local_settings_travis.py gdrive_to_commons/local_settings.py
   - mysql -e 'create database travis_ci_db;'
   - python manage.py migrate --noinput
   - python manage.py collectstatic
