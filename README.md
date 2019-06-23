@@ -1,5 +1,7 @@
 # Google drive to Wikimedia Commons
 
+[![Build Status](https://travis-ci.com/tonythomas01/gdrive_to_commons.svg?branch=master)](https://travis-ci.com/tonythomas01/gdrive_to_commons)
+
 Upload your files directly from Google drive to Wikimedia Commons. Currently
 deployed at [Toollabs](https://tools.wmflabs
 .org/google-drive-photos-to-commons/).
