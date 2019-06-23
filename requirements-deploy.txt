@@ -1,3 +1,3 @@
-requirements.txt
+-r requirements.txt
 # Deployment on toolforge (only MYSQL available) requires mysql adapters
 mysqlclient==1.4.2.post1
