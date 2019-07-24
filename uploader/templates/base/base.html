@@ -3,6 +3,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self' data:
+ gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self'
+ 'unsafe-inline'; media-src *;**script-src 'self' http://apis.google.com
+  'unsafe-inline' 'unsafe-eval';** "
+    />
+
     {% block meta %} {% endblock %}
     <link
       rel="stylesheet"
