@@ -31,3 +31,10 @@ DATABASES = {
         "HOST": "127.0.0.1",
     }
 }
+
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
+sentry_sdk.init(
+    dsn="https://test123@sentry.io/testProject", integrations=[DjangoIntegration()]
+)
