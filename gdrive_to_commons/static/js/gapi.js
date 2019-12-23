@@ -297,7 +297,8 @@ gapi._bs = new Date().getTime();
         var b = Z(),
           c = "";
         null !== b && (c = ' nonce="' + b + '"');
-        v.write("<" + W + ' src="' + encodeURI(a) + '"' + c + "></" + W + ">");
+        a = "<" + W + ' src="' + encodeURI(a) + '"' + c + "></" + W + ">";
+        v.write(a);
       }
     },
     ta = function(a) {
@@ -483,14 +484,14 @@ gapi.load("", {
           host: "https://apis.google.com"
         },
         enableMultilogin: true,
-        "googleapis.config": { auth: { useFirstPartyAuthV2: false } },
+        "googleapis.config": { auth: { useFirstPartyAuthV2: true } },
         isPlusUser: false,
         inline: { css: 1 },
         disableRealtimeCallback: false,
         drive_share: { skipInitCommand: true },
         csi: { rate: 0.01 },
         client: { cors: false },
-        isLoggedIn: false,
+        isLoggedIn: true,
         signInDeprecation: { rate: 0.0 },
         include_granted_scopes: true,
         llang: "en",
@@ -676,13 +677,13 @@ gapi.load("", {
         }
       },
       h:
-        "m;/_/scs/apps-static/_/js/k\u003doz.gapi.en_US.BW4NrCun1rw.O/am\u003dwQE/d\u003d1/rs\u003dAGLTcCO_Nud4aUV_1gfzBmUi0OLzCy3b5w/m\u003d__features__",
+        "m;/_/scs/apps-static/_/js/k\u003doz.gapi.en.xh-S9KbEGSE.O/am\u003dAQc/d\u003d1/ct\u003dzgms/rs\u003dAGLTcCMI6cckfOgfLoXSkY9UoCFGZek6-A/m\u003d__features__",
       u: "https://apis.google.com/js/api.js",
       hee: true,
-      fp: "6a05fa8e4f1e8c8cb7fd6f4d0b3839834cbf5586",
+      fp: "e944ac4b6578bd15c6f484474cab9a0ea5484962",
       dpo: false
     },
-    fp: "6a05fa8e4f1e8c8cb7fd6f4d0b3839834cbf5586",
+    fp: "e944ac4b6578bd15c6f484474cab9a0ea5484962",
     annotation: [
       "interactivepost",
       "recobar",
