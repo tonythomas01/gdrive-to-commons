@@ -28,3 +28,12 @@ DATABASES = {
         "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
+
+
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
+sentry_sdk.init(
+    dsn="https://<SENTRY_ID>@sentry.io/<SENTRY_PROJECT>",
+    integrations=[DjangoIntegration()],
+)
