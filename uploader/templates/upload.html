@@ -93,7 +93,7 @@
                                 <button
                                         class="btn btn-lg btn-primary btn-block text-uppercase"
                                         type="button"
-                                        onclick="loadPicker()"
+                                        onclick="onGoogleUploadButtonClick()"
                                 >
                                     Choose photos from Google Drive
                                     <i class="fas fa-caret-right"></i>
@@ -225,7 +225,7 @@
   var fileStagingTable;
 
   // Use the Google API Loader script to load the google.picker script.
-  function loadPicker() {
+  function onGoogleUploadButtonClick() {
     gapi.load("auth", { callback: onAuthApiLoad });
     gapi.load("picker", { callback: onPickerApiLoad });
   }
@@ -240,12 +240,10 @@
       handleAuthResult
     );
   }
-
   function onPickerApiLoad() {
     pickerApiLoaded = true;
     createPicker();
   }
-
   function handleAuthResult(authResult) {
     if (authResult && !authResult.error) {
       oauthToken = authResult.access_token;

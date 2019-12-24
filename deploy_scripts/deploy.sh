@@ -3,6 +3,7 @@ ssh -o "StrictHostKeyChecking=no" -i /tmp/deploy_rsa -A ${DEPLOY_UESR}@${DEPLOY_
 become ${APP_NAME_ON_TOOLFORGE}
 source /data/project/google-drive-photos-to-commons/www/python/venv/bin/activate
 cd /data/project/google-drive-photos-to-commons/www/python/src
+git stash
 git pull origin master
 webservice --backend=kubernetes python3.5 stop
 pip install -r requirements-deploy.txt
