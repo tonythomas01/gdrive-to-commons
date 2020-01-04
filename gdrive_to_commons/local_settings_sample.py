@@ -29,11 +29,13 @@ DATABASES = {
     }
 }
 
+from gdrive_to_commons.settings import DEBUG
 
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
+if not DEBUG:
+    import sentry_sdk
+    from sentry_sdk.integrations.django import DjangoIntegration
 
-sentry_sdk.init(
-    dsn="https://<SENTRY_ID>@sentry.io/<SENTRY_PROJECT>",
-    integrations=[DjangoIntegration()],
-)
+    sentry_sdk.init(
+        dsn="https://<SENTRY_ID>@sentry.io/<SENTRY_PROJECT>",
+        integrations=[DjangoIntegration()],
+    )
