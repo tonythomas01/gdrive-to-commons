@@ -150,7 +150,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-8 mx-auto step-4 d-block">
+            <div class="col-lg-8 mx-auto step-4">
                 <div class="card card-signin my-5">
                     <div class="card-body">
                       <div class="row logo-row col-xs-12">
@@ -169,15 +169,16 @@
                       </div>
 
                       <h5 class="app-desc text-center">
-                        Your selected file(s):
+                        The following files were uploaded!
                       </h5>
 
                       <div class="table-responsive mb-3">
                         <table class="table mb-0 results-panel">
                           <thead>
                             <tr>
-                              <th>Title</th>
-                              <th>URL</th>
+                              <th style="width: 105px">Thumbnail</th>
+                              <th>Name of file</th>
+                              <th>Link to upload</th>
                             </tr>
                           </thead>
                         </table>
@@ -384,7 +385,9 @@
         $(".results-panel").append("<tbody>");
         data.forEach(function(item) {
           $(".results-panel").append(
-            "<tr><td>" +
+            "<tr><td><img src='" +
+              generateThumbNailLink(item.url) +
+              "' style='width: 50px'></td><td>" +
               item.canonicaltitle +
               "</td><td><a href='" +
               item.url +
