@@ -176,7 +176,7 @@
                         <table class="table mb-0 results-panel">
                           <thead>
                             <tr>
-                              <th style="width: 105px">Thumbnail</th>
+                              <th style="width: 105px">Preview</th>
                               <th>Name of file</th>
                               <th>Link to upload</th>
                             </tr>
@@ -287,7 +287,7 @@
     }
   }
 
-  function generateThumbNailLink(itemId) {
+  function generateGdriveThumbNailLink(itemId) {
     return `https://drive.google.com/thumbnail?authuser=0&sz=w50-h50&id=${itemId}`;
   }
   // A simple callback implementation.
@@ -312,7 +312,9 @@
             title: "File",
             field: "id",
             formatter: function(cell, formatterParams, onRendered) {
-              return `<img src='${generateThumbNailLink(cell.getValue())}'>`;
+              return `<img src='${generateGdriveThumbNailLink(
+                cell.getValue()
+              )}'>`;
             },
             width: 80
           },
@@ -385,15 +387,7 @@
         $(".results-panel").append("<tbody>");
         data.forEach(function(item) {
           $(".results-panel").append(
-            "<tr><td><img src='" +
-              generateThumbNailLink(item.url) +
-              "' style='width: 50px'></td><td>" +
-              item.canonicaltitle +
-              "</td><td><a href='" +
-              item.url +
-              "' target='_blank'>" +
-              item.url +
-              "</a></td></tr>"
+            `<tr><td><img src='${item.url}' style='width: 50px'></td><td>${item.canonicaltitle}</td><td><a href='${item.url}' target='_blank'>${item.url}</a></td></tr>`
           );
         });
         $(".results-panel").append("</tbody>");
