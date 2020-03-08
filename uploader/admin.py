@@ -1,9 +1,9 @@
 from django.contrib import admin
 
-from .models import FileUploadCounter
+from uploader.models import FileUpload
 
-# Register your models here.
-# admin.site.register(FileUploadCounter)
-@admin.register(FileUploadCounter)
-class FileUploadCounterAdmin(admin.ModelAdmin):
-    pass
+
+@admin.register(FileUpload)
+class FileUploadAdmin(admin.ModelAdmin):
+    list_display = ("username", "number_of_files", "uploaded_at")
+    readonly_fields = ("username", "number_of_files", "uploaded_at")

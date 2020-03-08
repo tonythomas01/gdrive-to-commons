@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from uploader.serializers import GooglePhotosUploadInputSerializer
 from uploader.wiki_uploader import WikiUploader
 
-from uploader.models import FileUploadCounter
+from uploader.models import FileUpload
 
 
 class HomePageView(TemplateView):
@@ -20,7 +20,10 @@ class HomePageView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context["count"] = FileUploadCounter.objects.all().first().count
+        count = 0
+        for record in FileUpload.objects.all():
+            count += record.number_of_files
+        context["count"] = count
         return context
 
 
@@ -63,12 +66,18 @@ class FileUploadViewSet(views.APIView):
             access_token=social_auth.get("oauth_token", None),
             access_secret=social_auth.get("oauth_token_secret", None),
         )
+
         uploaded_results = []
+
+        current_user = FileUpload(username=request.user.username)
+
+        count = 0
         for file in file_list:
             request = drive_service.files().get_media(fileId=file["id"])
             fh = io.BytesIO()
             downloader = MediaIoBaseDownload(fh, request)
             done = False
+
             while done is False:
                 download_status, done = downloader.next_chunk()
 
@@ -77,9 +86,8 @@ class FileUploadViewSet(views.APIView):
             )
             if uploaded:
                 uploaded_results.append(image_info)
-                print(uploaded)
-                counter = FileUploadCounter.objects.all().first()
-                counter.count += 1
-                counter.save()
+                count += 1
+        current_user.number_of_files = count
+        current_user.save()
 
         return Response(data=uploaded_results, status=status.HTTP_200_OK)

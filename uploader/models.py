@@ -1,32 +1,23 @@
 from django.db import models
 
-
-class SingletonModel(models.Model):
-    class Meta:
-        abstract = True
-
-    def save(self, *args, **kwargs):
-        self.pk = 1
-        super(SingletonModel, self).save(*args, **kwargs)
-
-    def delete(self, *args, **kwargs):
-        pass
-
-    @classmethod
-    def load(cls):
-        obj, created = cls.objects.get_or_create(pk=1)
-        return obj
+from django.utils import timezone
 
 
-class FileUploadCounter(SingletonModel):
-    count = models.PositiveIntegerField("Counter", default=0)
+class FileUpload(models.Model):
+
+    number_of_files = models.PositiveIntegerField("Number of Files Uploaded", default=0)
+    username = models.CharField("Username", max_length=80)
+    uploaded_at = models.DateTimeField("Uploaded at", auto_now=True, editable=False)
 
     def __str__(self):
-        return str(self.count)
+        return (
+            self.username
+            + " : "
+            + str(self.number_of_files)
+            + " : "
+            + str(self.uploaded_at)
+        )
 
     def save(self, *args, **kwargs):
 
-        return super(FileUploadCounter, self).save(*args, **kwargs)
-
-
-FileUploadCounter.load()
+        return super(FileUpload, self).save(*args, **kwargs)
