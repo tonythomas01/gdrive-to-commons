@@ -71,14 +71,15 @@ class FileUploadViewSet(views.APIView):
             done = False
             while done is False:
                 download_status, done = downloader.next_chunk()
-            counter = FileUploadCounter.objects.all().first()
-            counter.count += 1
-            counter.save()
 
             uploaded, image_info = wiki_uploader.upload_file(
                 file_name=file["name"], file_stream=fh, description=file["description"]
             )
             if uploaded:
                 uploaded_results.append(image_info)
+                print(uploaded)
+                counter = FileUploadCounter.objects.all().first()
+                counter.count += 1
+                counter.save()
 
         return Response(data=uploaded_results, status=status.HTTP_200_OK)
