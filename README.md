@@ -54,6 +54,7 @@ For Wikimedia developers, you can find more information on development keys [her
    You need to modify the values there to use the applicaiton in full.
 5. Run the Django standard runserver steps:
    ```
+   (gdrive-env-3.5.3) gdrive_to_commons/$ python manage.py makemigrations
    (gdrive-env-3.5.3) gdrive_to_commons/$ python manage.py migrate
    (gdrive-env-3.5.3) gdrive_to_commons/$ python manage.py collectstatic
    (gdrive-env-3.5.3) gdrive_to_commons/$ python manage.py runserver localhost:8000
