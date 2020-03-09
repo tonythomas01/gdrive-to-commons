@@ -10,14 +10,6 @@ class FileUpload(models.Model):
     uploaded_at = models.DateTimeField("Uploaded at", auto_now=True, editable=False)
 
     def __str__(self):
-        return (
-            self.username
-            + " : "
-            + str(self.number_of_files)
-            + " : "
-            + str(self.uploaded_at)
+        return "{}  :  {} : {})".format(
+            self.username, str(self.number_of_files), str(self.uploaded_at)
         )
-
-    def save(self, *args, **kwargs):
-
-        return super(FileUpload, self).save(*args, **kwargs)

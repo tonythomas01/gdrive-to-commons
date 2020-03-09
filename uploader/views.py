@@ -51,14 +51,13 @@ class FileUploadViewSet(views.APIView):
 
         validated_data = serializer.validated_data
         file_list = validated_data.get("fileList", None)
-        print(file_list[0])
+
         drive_service = self.get_google_drive_service(
             access_token=validated_data.get("token", None)
         )
         social_auth = self.request.user.social_auth.get(
             provider="mediawiki"
         ).extra_data["access_token"]
-        # social_auth='eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NTg5MmVlMTljMTk0MTQ2NDVhZDM3MzM4OGVjOGRhNSIsImp0aSI6IjczYWM0MWJkOGQyOGY3ZTc5NWY4OWE3NmE2ZDExNjhhYzU0M2U3YzA4ZTliYWVlMWZkNmQyNmM0MjFhZjM1MmE2MWRjNjhhYWZiOWI4NjllIiwiaWF0IjoxNTgzNTgyNTk3LCJuYmYiOjE1ODM1ODI1OTcsImV4cCI6OTIyMzM3MTI2MTI4NzU4MjU5Nywic3ViIjoiNjE3MzA0MTEiLCJzY29wZXMiOlsiYmFzaWMiLCJ1cGxvYWRmaWxlIiwidXBsb2FkZWRpdG1vdmVmaWxlIl19.Szxfm_IlAL5ripo8JV2EtgA2PXpQbQkZM8sB9eDSnVd3ZmhlDhRYkB0uTAp_SmrAABe_Uel78sec8EfmaG_0DwRdORKvIb-4fpbQIwLQZXRA3CzCYvQjupEook6Lg1z7nG-OJ04bXtKbVWpy7YjYM0fSrlgczOWfwQXgvUiimLf24LmH_uAR9UIy8VNThvN0LDHulqvHDMzUNNdLoi1hBjbMgKtsxzaS4IRfngR3VKsW-PUKN3xrzrsYpYeAJTlgxIQiYpLOqPNDTwQkCmSDpuswT-XGm0t8OuigCPeaa3Iv45Y7rMs9cArhhJlWJf-mcCQGJGCXyMX1dzCQDmYzkzoJxhmh_4U6nidMsJoEzMLCVkf7BjBALPjP0YJELHze0h5NjUnJgtO1vBt52zTkHbGk-qlWXnQkxOFiUKBDww3_l_iOte0SLr4ktIXZFb2x2RGdkyVsqG6fMZ6w7l6SBfSHYpnR5mSnonskQNDXiDfT4AmeLPnjiOVbj3Uk2f9sqeOrdDxC4hObELZHNps8Z4l8jmn76kMCFvaWz2VboZz7IvM5IuItnQKmCrvTLn3QOuu-v9dlqEBxtw4YgXvf51qKVtHUqVuuEFXcf4by2yce7cA2tJhVn76WwyLHub1f0YD-fhvBJ6XWPOLGSVrANrs2X6o0eV3XKmAFRo4MV1U'
         wiki_uploader = WikiUploader(
             host=settings.WIKI_URL,
             consumer_secret=settings.SOCIAL_AUTH_MEDIAWIKI_SECRET,
@@ -69,7 +68,7 @@ class FileUploadViewSet(views.APIView):
 
         uploaded_results = []
 
-        current_user = FileUpload(username=request.user.username)
+        file_upload_log = FileUpload(username=request.user.username)
 
         count = 0
         for file in file_list:
@@ -87,7 +86,7 @@ class FileUploadViewSet(views.APIView):
             if uploaded:
                 uploaded_results.append(image_info)
                 count += 1
-        current_user.number_of_files = count
-        current_user.save()
+        file_upload_log.number_of_files = count
+        file_upload_log.save()
 
         return Response(data=uploaded_results, status=status.HTTP_200_OK)
