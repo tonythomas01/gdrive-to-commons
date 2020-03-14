@@ -47,6 +47,7 @@ class FileUploadViewSet(views.APIView):
         drive_service = self.get_google_drive_service(
             access_token=validated_data.get("token", None)
         )
+        compress = validated_data.get("compress", False)
         social_auth = self.request.user.social_auth.get(
             provider="mediawiki"
         ).extra_data["access_token"]
@@ -68,9 +69,9 @@ class FileUploadViewSet(views.APIView):
                 download_status, done = downloader.next_chunk()
 
             image = Image.open(fh)
-            print(image.size)
-            image = resize_image(image)
-            print(image.size)
+
+            if compress:
+                image = resize_image(image)
 
             fh_resized = io.BytesIO()
             image.save(

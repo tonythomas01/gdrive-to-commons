@@ -38,6 +38,13 @@
                         </div>
 
                         <form class="form-signin">
+                          <div class="custom-control custom-checkbox m-1 mr-sm-2">
+                            <input type="checkbox" class="custom-control-input" id="imageCompress" value="false" />
+                            <label class="custom-control-label" for="imageCompress">
+                              <span>Do you want to compress the images before upload?
+              
+                              </span></label>
+                          </div>
                             <button
                                     class="btn btn-lg btn-primary btn-block text-uppercase"
                                     type="button"
@@ -350,7 +357,8 @@
     $("#upload-button").toggleClass("disabled");
     var fileData = {
       fileList: fileStagingTable.getData(),
-      token: oauthToken
+      token: oauthToken,
+      compress: $("#imageCompress").is(":checked")
     };
 
     function getCookie(name) {
