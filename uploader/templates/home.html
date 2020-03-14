@@ -1,4 +1,5 @@
 {% extends 'base/base.html' %} {% load static %} {% block body %}
+
 <div class="container">
   <div class="row">
     <div class="col-sm-12 col-md-12 col-lg-10 mx-auto">
@@ -56,6 +57,12 @@
               </div>
             </div>
           </div>
+          <div class="col-xs-12">
+            <p style="text-align: center">
+              A total of <span style="font-weight: bold"> {{ count }}</span>
+              images have been uploaded using GDrive to Commons!
+            </p>
+          </div>
 
           <div class="col-xs-12">
             <div class="agreement-content">
@@ -109,12 +116,10 @@
                   />
                   <label class="custom-control-label" for="customControlInline">
                     <!-- prettier-ignore -->
-                    <span
-                      >I've read and accept the
+                    <span>I've read and accept the
                       <a href="{% url 'privacy_policy' %}">
                         Privacy Policy
-                      </a></span
-                    ></label
+                      </a></span></label
                   >
                 </div>
                 <button

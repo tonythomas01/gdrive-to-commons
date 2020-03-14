@@ -18,3 +18,6 @@ A clear and concise description of any alternative solutions or features you've 
 
 **Additional context**
 Add any other context or screenshots about the feature request here.
+
+**Phabricator link**
+Create a task under project https://phabricator.wikimedia.org/tag/google-drive-to-commons/ and link it here ?
