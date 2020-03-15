@@ -11,204 +11,155 @@
 {% endblock %} {% block body %}
 <!-- prettier-ignore -->
 <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto step-3">
-                <div class="card card-signin my-5">
-                    <div class="card-body">
-                        <div class="row logo-row col-xs-12">
-                            <div class="col-xs-4">
-                                <img
-                                        src="{% static 'svg/Google_Drive_Logo.svg' %}"
-                                        width="100px"
-                                />
-                            </div>
-                            <div class="col-xs-4">
-                                <i class="fas fa-caret-right"></i>
-                            </div>
-                            <div class="col-xs-4">
-                                <img src="{% static 'svg/Commons-logo.svg' %}" height="100px" />
-                            </div>
-                        </div>
-
-                        <h5 class="app-desc text-center">Your selected file(s):</h5>
-                        <div class="table-responsive">
-                            <table class="table files-table"
-                                   id="picked-files-table">
-                            </table>
-                        </div>
-
-                        <form class="form-signin">
-                            <button
-                                    class="btn btn-lg btn-primary btn-block text-uppercase"
-                                    type="button"
-                                    id="upload-button"
-                                    onclick="uploadFiles()"
-                            >
-                                Upload to Wikimedia Commons <i class="fas fa-caret-right"></i>
-                            </button>
-                            <hr class="my-4" />
-                            <h5 class="card-title text-center">
-                                <div class="progress">
-                                    <div
-                                            class="progress-bar"
-                                            role="progressbar"
-                                            style="width: 75%"
-                                            aria-valuenow="75"
-                                            aria-valuemin="0"
-                                            aria-valuemax="100"
-                                    >
-                                        75%
-                                    </div>
-                                </div>
-                            </h5>
-                        </form>
-                    </div>
-                </div>
+  <div class="row">
+    <div class="col-lg-8 mx-auto step-3">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <div class="row logo-row col-xs-12">
+            <div class="col-xs-4">
+              <img src="{% static 'svg/Google_Drive_Logo.svg' %}" width="100px" />
             </div>
-
-            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto step-1-2">
-                <div class="card card-signin my-5">
-                    <div class="card-body">
-                        <div class="row logo-row col-xs-12">
-                            <div class="col-xs-4">
-                                <img
-                                        src="{% static 'svg/Google_Drive_Logo.svg' %}"
-                                        width="100px"
-                                />
-                            </div>
-                            <div class="col-xs-4">
-                                <i class="fas fa-caret-right"></i>
-                            </div>
-                            <div class="col-xs-4">
-                                <img src="{% static 'svg/Commons-logo.svg' %}" height="100px" />
-                            </div>
-                        </div>
-
-                        <h5 class="app-desc text-center">
-                            Upload your photos from Google Drive to Wikimedia Commons!
-                        </h5>
-
-                        <form class="form-signin">
-                            {% if user.is_authenticated %}
-                                <button
-                                        class="btn btn-lg btn-primary btn-block text-uppercase"
-                                        type="button"
-                                        onclick="onGoogleUploadButtonClick()"
-                                >
-                                    Choose photos from Google Drive
-                                    <i class="fas fa-caret-right"></i>
-                                </button>
-                            {% else %}
-                                <a
-                                        href="{% url 'social:begin' 'mediawiki' %}"
-                                        style="text-decoration: none"
-                                >
-                                    <button
-                                            class="btn btn-lg btn-primary btn-block text-uppercase"
-                                            type="button"
-                                    >
-                                        Login to Wikimedia Commons
-                                        <i
-                                                class="fas
-                    fa-caret-right fa-1x"
-                                        ></i>
-                                    </button>
-                                </a>
-                            {% endif %}
-
-                            <hr class="my-4" />
-                            <h5 class="card-title text-center">
-                                <div class="progress">
-                                    {% if user.is_authenticated %}
-                                        <div
-                                                class="progress-bar"
-                                                role="progressbar"
-                                                style="width: 50%"
-                                                aria-valuenow="50"
-                                                aria-valuemin="0"
-                                                aria-valuemax="100"
-                                        >
-                                            50%
-                                        </div>
-                                    {% else %}
-
-                                        <div
-                                                class="progress-bar"
-                                                role="progressbar"
-                                                style="width: 25%"
-                                                aria-valuenow="25"
-                                                aria-valuemin="0"
-                                                aria-valuemax="100"
-                                        >
-                                            25%
-                                        </div>
-                                    {% endif %}
-                                </div>
-                            </h5>
-                        </form>
-                    </div>
-                </div>
+            <div class="col-xs-4">
+              <i class="fas fa-caret-right"></i>
             </div>
-
-            <div class="col-lg-8 mx-auto step-4">
-                <div class="card card-signin my-5">
-                    <div class="card-body">
-                      <div class="row logo-row col-xs-12">
-                        <div class="col-xs-4">
-                            <img
-                                    src="{% static 'svg/Google_Drive_Logo.svg' %}"
-                                    width="100px"
-                            />
-                        </div>
-                        <div class="col-xs-4">
-                            <i class="fas fa-caret-right"></i>
-                        </div>
-                        <div class="col-xs-4">
-                            <img src="{% static 'svg/Commons-logo.svg' %}" height="100px" />
-                        </div>
-                      </div>
-
-                      <h5 class="app-desc text-center">
-                        The following files were uploaded!
-                      </h5>
-
-                      <div class="table-responsive mb-3">
-                        <table class="table mb-0 results-panel">
-                          <thead>
-                            <tr>
-                              <th style="width: 105px">Preview</th>
-                              <th>Name of file</th>
-                              <th>Link to upload</th>
-                            </tr>
-                          </thead>
-                        </table>
-                      </div>
-
-                      <a class="btn btn-lg btn-primary btn-block text-uppercase" href='{% url "upload_page" %}'>
-                        Upload more <i class="fas fa-caret-right"></i>
-                      </a>
-
-                      <hr class="my-4" />
-
-                      <h5 class="card-title text-center">
-                          <div class="progress">
-                              <div
-                                      class="progress-bar"
-                                      role="progressbar"
-                                      style="width: 100%"
-                                      aria-valuenow="100"
-                                      aria-valuemin="0"
-                                      aria-valuemax="100"
-                              >
-                                  100%
-                              </div>
-                          </div>
-                      </h5>
-                    </div>
-                </div>
+            <div class="col-xs-4">
+              <img src="{% static 'svg/Commons-logo.svg' %}" height="100px" />
             </div>
+          </div>
+
+          <h5 class="app-desc text-center">Your selected file(s):</h5>
+          <div class="table-responsive">
+            <table class="table files-table" id="picked-files-table">
+            </table>
+          </div>
+
+          <form class="form-signin">
+            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="button" id="upload-button"
+              onclick="uploadFiles()">
+              Upload to Wikimedia Commons <i class="fas fa-caret-right"></i>
+            </button>
+            <hr class="my-4" />
+            <h5 class="card-title text-center">
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0"
+                  aria-valuemax="100">
+                  75%
+                </div>
+              </div>
+            </h5>
+          </form>
         </div>
+      </div>
     </div>
+
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto step-1-2">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <div class="row logo-row col-xs-12">
+            <div class="col-xs-4">
+              <img src="{% static 'svg/Google_Drive_Logo.svg' %}" width="100px" />
+            </div>
+            <div class="col-xs-4">
+              <i class="fas fa-caret-right"></i>
+            </div>
+            <div class="col-xs-4">
+              <img src="{% static 'svg/Commons-logo.svg' %}" height="100px" />
+            </div>
+          </div>
+
+          <h5 class="app-desc text-center">
+            Upload your photos from Google Drive to Wikimedia Commons!
+          </h5>
+
+          <form class="form-signin">
+            {% if user.is_authenticated %}
+            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="button"
+              onclick="onGoogleUploadButtonClick()">
+              Choose photos from Google Drive
+              <i class="fas fa-caret-right"></i>
+            </button>
+            {% else %}
+            <a href="{% url 'social:begin' 'mediawiki' %}" style="text-decoration: none">
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="button">
+                Login to Wikimedia Commons
+                <i class="fas
+                    fa-caret-right fa-1x"></i>
+              </button>
+            </a>
+            {% endif %}
+
+            <hr class="my-4" />
+            <h5 class="card-title text-center">
+              <div class="progress">
+                {% if user.is_authenticated %}
+                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                  aria-valuemax="100">
+                  50%
+                </div>
+                {% else %}
+
+                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0"
+                  aria-valuemax="100">
+                  25%
+                </div>
+                {% endif %}
+              </div>
+            </h5>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-8 mx-auto step-4">
+      <div class="card card-signin my-5">
+        <div class="card-body">
+          <div class="row logo-row col-xs-12">
+            <div class="col-xs-4">
+              <img src="{% static 'svg/Google_Drive_Logo.svg' %}" width="100px" />
+            </div>
+            <div class="col-xs-4">
+              <i class="fas fa-caret-right"></i>
+            </div>
+            <div class="col-xs-4">
+              <img src="{% static 'svg/Commons-logo.svg' %}" height="100px" />
+            </div>
+          </div>
+
+          <h5 class="app-desc text-center">
+            The following files were uploaded!
+          </h5>
+
+          <div class="table-responsive mb-3">
+            <table class="table mb-0 results-panel">
+              <thead>
+                <tr>
+                  <th style="width: 105px">Preview</th>
+                  <th>Name of file</th>
+                  <th>Link to upload</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+
+          <a class="btn btn-lg btn-primary btn-block text-uppercase" href='{% url "upload_page" %}'>
+            Upload more <i class="fas fa-caret-right"></i>
+          </a>
+
+          <hr class="my-4" />
+
+          <h5 class="card-title text-center">
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0"
+                aria-valuemax="100">
+                100%
+              </div>
+            </div>
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- prettier-ignore -->
 {% endblock body %}
 <!-- prettier-ignore -->
@@ -319,6 +270,165 @@
             width: 80
           },
           {
+            title: "License",
+            field: "license",
+            formatter: function(cell, formatterParams, onRendered) {
+              return `<select name="wpLicense" id="wpLicense${
+                cell.getData()["id"]
+              }" class="custom-select" value="">
+  <option title="none" value="">None selected</option>
+  <option title="subst:uwl" value="subst:uwl"
+    >I don't know what the license is</option
+  >
+  <option disabled="disabled" style="color: GrayText" value=""
+    >Your own work (best practices):</option
+  >
+  <option
+    title="self|GFDL|cc-by-sa-all|migration=redundant"
+    value="self|GFDL|cc-by-sa-all|migration=redundant"
+    >&nbsp;&nbsp;Own work, copyleft, attribution required (Multi-license GFDL,
+    CC BY-SA all versions)
+  </option>
+  <option title="self|Cc-zero" value="self|Cc-zero"
+    >&nbsp;&nbsp;CC0 1.0 Universal Public Domain Dedication, all rights waived
+    (Public domain)</option
+  >
+  <option title="PD-self" value="PD-self"
+    >&nbsp;&nbsp;Own work, all rights released (Public domain)</option
+  >
+  <option
+    title="self|GFDL|cc-by-sa-4.0|migration=redundant"
+    value="self|GFDL|cc-by-sa-4.0|migration=redundant"
+    >&nbsp;&nbsp;Own work, copyleft, attribution required (GFDL, CC BY-SA
+    4.0)</option
+  >
+  <option
+    title="self|GFDL|cc-by-4.0|migration=redundant"
+    value="self|GFDL|cc-by-4.0|migration=redundant"
+    >&nbsp;&nbsp;Own work, attribution required (GFDL, CC BY 4.0)</option
+  >
+  <option title="self|cc-by-sa-4.0" value="self|cc-by-sa-4.0"
+    >&nbsp;&nbsp;Own work, copyleft, attribution required (CC BY-SA 4.0)</option
+  >
+  <option disabled="disabled" style="color: GrayText" value=""
+    >Not self-made, but has been released under:</option
+  >
+  <option disabled="disabled" style="color: GrayText" value=""
+    >&nbsp;&nbsp;Creative Commons licenses</option
+  >
+  <option title="cc-by-sa-4.0" value="cc-by-sa-4.0"
+    >&nbsp;&nbsp;&nbsp;&nbsp;Attribution ShareAlike 4.0</option
+  >
+  <option title="cc-by-sa-3.0" value="cc-by-sa-3.0"
+    >&nbsp;&nbsp;&nbsp;&nbsp;Attribution ShareAlike 3.0</option
+  >
+  <option title="cc-by-4.0" value="cc-by-4.0"
+    >&nbsp;&nbsp;&nbsp;&nbsp;Attribution 4.0</option
+  >
+  <option title="cc-by-3.0" value="cc-by-3.0"
+    >&nbsp;&nbsp;&nbsp;&nbsp;Attribution 3.0</option
+  >
+  <option title="Cc-zero" value="Cc-zero"
+    >&nbsp;&nbsp;&nbsp;&nbsp;CC0 1.0 universell Public domain-dedikation
+  </option>
+  <option disabled="disabled" style="color: GrayText" value=""
+    >&nbsp;&nbsp;Free Art License</option
+  >
+  <option title="FAL" value="FAL"
+    >&nbsp;&nbsp;&nbsp;&nbsp;Free Art License</option
+  >
+  <option disabled="disabled" style="color: GrayText" value=""
+    >&nbsp;&nbsp;Flickr photos</option
+  >
+  <option
+    title="subst:template 2|flickrreview|subst:uwl"
+    value="subst:template 2|flickrreview|subst:uwl"
+    >&nbsp;&nbsp;&nbsp;&nbsp;Image from Flickr and I do not know the
+    license</option
+  >
+  <option
+    title="subst:template 2|cc-by-sa-2.0|flickrreview"
+    value="subst:template 2|cc-by-sa-2.0|flickrreview"
+    >&nbsp;&nbsp;&nbsp;&nbsp;Uploaded to Flickr under Creative Commons
+    Attribution ShareAlike 2.0</option
+  >
+  <option
+    title="subst:template 2|cc-by-2.0|flickrreview"
+    value="subst:template 2|cc-by-2.0|flickrreview"
+    >&nbsp;&nbsp;&nbsp;&nbsp;Uploaded to Flickr under Creative Commons
+    Attribution 2.0</option
+  >
+  <option disabled="disabled" style="color: GrayText" value=""
+    >Public domain:</option
+  >
+  <option title="PD-old-100" value="PD-old-100"
+    >&nbsp;&nbsp;Author died more than 100 years ago</option
+  >
+  <option title="PD-old-100-1923" value="PD-old-100-1923"
+    >&nbsp;&nbsp;Author died more than 100 years ago AND the work was published
+    before 1923</option
+  >
+  <option title="PD-old-70-1923" value="PD-old-70-1923"
+    >&nbsp;&nbsp;Author died more than 70 years ago AND the work was published
+    before 1923</option
+  >
+  <option
+    title="PD-old-70|Unclear-PD-US-old-70"
+    value="PD-old-70|Unclear-PD-US-old-70"
+    >&nbsp;&nbsp;Author died more than 70 years ago BUT the work was published
+    after 1923</option
+  >
+  <option title="PD-Art" value="PD-Art"
+    >&nbsp;&nbsp;Reproduction of a painting or other 2D work that is in the
+    public domain because of its age â€“ needs specification after
+    uploading</option
+  >
+  <option title="PD-US" value="PD-US"
+    >&nbsp;&nbsp;First published in the United States before 1923</option
+  >
+  <option title="PD-US-no notice" value="PD-US-no notice"
+    >&nbsp;&nbsp;First published in the United States between 1923 and 1977
+    without a copyright notice</option
+  >
+  <option title="PD-USGov" value="PD-USGov"
+    >&nbsp;&nbsp;Original work of the US Federal Government</option
+  >
+  <option title="PD-USGov-NASA" value="PD-USGov-NASA"
+    >&nbsp;&nbsp;Original work of NASA</option
+  >
+  <option title="PD-USGov-Military-Navy" value="PD-USGov-Military-Navy"
+    >&nbsp;&nbsp;Original work of the US Military Navy</option
+  >
+  <option title="PD-ineligible" value="PD-ineligible"
+    >&nbsp;&nbsp;Too simple to be copyrighted</option
+  >
+  <option
+    title="subst:Template 2|PD-textlogo|Trademarked"
+    value="subst:Template 2|PD-textlogo|Trademarked"
+    >&nbsp;&nbsp;Logo with only simple text (wordmark)</option
+  >
+  <option disabled="disabled" style="color: GrayText" value=""
+    >Other alternatives:</option
+  >
+  <option title="subst:uwl" value="subst:uwl"
+    >&nbsp;&nbsp;I found the image on Google or a random website</option
+  >
+  <option title="Fair use" value="Fair use"
+    >&nbsp;&nbsp;Fair use image (Not allowed on Commons. Image will be
+    deleted.)</option
+  >
+  <option title="Copyrighted free use" value="Copyrighted free use"
+    >&nbsp;&nbsp;Copyrighted, but may be used for any purpose, including
+    commercially</option
+  >
+  <option title="Attribution" value="Attribution"
+    >&nbsp;&nbsp;May be used for any purpose, including commercially, if the
+    copyright holder is properly attributed</option
+  >
+</select>`;
+            }
+          },
+          {
             title: "Title",
             field: "name",
             editor: "input",
@@ -347,11 +457,19 @@
 
   function uploadFiles() {
     // Disable the button first.
+
     $("#upload-button").toggleClass("disabled");
     var fileData = {
       fileList: fileStagingTable.getData(),
       token: oauthToken
     };
+
+    for (var x = 0; x < fileData["fileList"].length; x++) {
+      var sel = document.getElementById(
+        `wpLicense${fileData["fileList"][x]["id"]}`
+      );
+      fileData["fileList"][x]["license"] = sel.value;
+    }
 
     function getCookie(name) {
       var cookieValue = null;
