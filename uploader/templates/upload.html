@@ -244,7 +244,9 @@
 
   // Use the Google API Loader script to load the google.picker script.
   function onGoogleUploadButtonClick() {
-    gapi.load("auth", { callback: onAuthApiLoad });
+    if (oauthToken === undefined) {
+      gapi.load("auth", { callback: onAuthApiLoad });
+    }
     gapi.load("picker", { callback: onPickerApiLoad });
   }
 
@@ -291,6 +293,15 @@
   function generateGdriveThumbNailLink(itemId) {
     return `https://drive.google.com/thumbnail?authuser=0&sz=w50-h50&id=${itemId}`;
   }
+
+  function checkIfDataExists(data) {
+    if (data.length === 0) {
+      $(".step-3").hide();
+      $(".step-1-2").show();
+      pickedFiles = [];
+    }
+  }
+
   // A simple callback implementation.
   function pickerCallback(data) {
     if (data.action == google.picker.Action.PICKED) {
@@ -307,6 +318,7 @@
 
       fileStagingTable = new Tabulator("#picked-files-table", {
         data: pickedFiles,
+        dataEdited: checkIfDataExists,
         layout: "fitColumns",
         columns: [
           {
