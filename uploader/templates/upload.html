@@ -202,14 +202,17 @@
                                       aria-valuemax="100"
                               >
                                   100%
-                              </div>
+                                    </div>
+                                </div>
+                            </h5>
                           </div>
-                      </h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+   </div>
+</div>  
 <!-- prettier-ignore -->
 {% endblock body %}
 <!-- prettier-ignore -->
@@ -319,6 +322,47 @@
             },
             width: 80
           },
+                    {
+            title: "Categories",
+            field: "categories",
+            formatter: function(cell, formatterParams, onRendered) {
+              return `<select name="wpCategories" id="wpCategories${
+                cell.getData()["id"]
+              }" class="custom-select" value="">
+  
+<option title="Abstract" value="Abstract">Abstract</option>
+<option title="Animals/Wildlife" value="Animals/Wildlife">Animals/Wildlife</option>
+<option title="The Arts" value="The Arts">The Arts</option>
+<option title="Backgroudns/Textures" value="Backgroudns/Textures">Backgroudns/Textures</option>
+<option title="Beauty/Fashion" value="Beauty/Fashion">Beauty/Fashion</option>
+<option title="Buildings/Landmarks" value="Buildings/Landmarks">Buildings/Landmarks</option>
+<option title="Business/Finance" value="Business/Finance">Business/Finance</option>
+<option title="Celebrities" value="Celebrities">Celebrities</option>
+<option title="Editorial" value="Editorial">Editorial</option>
+<option title="Education" value="Education">Education</option>
+<option title="Food and Drink" value="Food and Drink">Food and Drink</option>
+<option title="Healthcare/Medical" value="Healthcare/Medical">Healthcare/Medical</option>
+<option title="Holidays" value="Holidays">Holidays</option>
+<option title="Illustrations/Clip-Art" value="Illustrations/Clip-Art">Illustrations/Clip-Art</option>
+<option title="Industrial" value="Industrial">Industrial</option>
+<option title="Interiors" value="Interiors">Interiors</option>
+<option title="Miscellaneous" value="Miscellaneous">Miscellaneous</option>
+<option title="Nature" value="Nature">Nature</option>
+<option title="Objects" value="Objects">Objects</option>
+<option title="Parks/Outdoor" value="Parks/Outdoor">Parks/Outdoor</option>
+<option title="People" value="People">People</option>
+<option title="Religion" value="Religion">Religion</option>
+<option title="Science" value="Science">Science</option>
+<option title="Signs/Symbols" value="Signs/Symbols">Signs/Symbols</option>
+<option title="Sports/Recreation" value="Sports/Recreation">Sports/Recreation</option>
+<option title="Technology" value="Technology">Technology</option>
+<option title="Transportation" value="Transportation">Transportation</option>
+<option title="Vectors" value="Vectors">Vectors</option>
+<option title="Vintage" value="Vintage">Vintage</option>  
+</select>`;
+            }
+          },         
+          
           {
             title: "Title",
             field: "name",
@@ -353,6 +397,13 @@
       fileList: fileStagingTable.getData(),
       token: oauthToken
     };
+    
+    for (var x = 0; x < fileData["fileList"].length; x++) {
+      var sel = document.getElementById(
+        `wpCategories${fileData["fileList"][x]["id"]}`
+      );
+      fileData["fileList"][x]["categories"] = sel.value;
+    }    
 
     function getCookie(name) {
       var cookieValue = null;
