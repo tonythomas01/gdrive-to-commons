@@ -27,13 +27,18 @@ class WikiUploader(object):
         if not description:
             description = file_name
 
-        upload_result = self.mw_client.upload(
-            file=file_stream,
-            filename=file_name,
-            description=description,
-            ignore=True,
-            comment="Uploaded with Google drive to commons.",
-        )
+        try:
+            upload_result = self.mw_client.upload(
+                file=file_stream,
+                filename=file_name,
+                description=description,
+                ignore=True,
+                comment="Uploaded with Google drive to commons.",
+            )
+        except mwclient.errors.APIError as e:
+            if e.args[0] == "fileexists-no-change":
+                return False, {}
+
         debug_information = "Uploaded: {0} to: {1}, more information: {2}".format(
             file_name, self.mw_client.host, upload_result
         )
