@@ -348,7 +348,10 @@
 
   function uploadFiles() {
     // Disable the button first.
-    $("#upload-button").toggleClass("disabled");
+    $("#upload-button").prop("disabled", true);
+    $("#upload-button i")
+      .removeClass("fa-caret-right")
+      .addClass("fa-spinner fa-spin");
     var fileData = {
       fileList: fileStagingTable.getData(),
       token: oauthToken,
@@ -378,6 +381,13 @@
       return /^(GET|HEAD|OPTIONS|TRACE)$/.test(method);
     }
 
+    function enableUploadButton() {
+      $("#upload-button").prop("disabled", false);
+      $("#upload-button i")
+        .removeClass("fa-spinner fa-spin")
+        .addClass("fa-caret-right");
+    }
+
     $.ajax({
       // prettier-ignore
       url: "{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url 'file_upload' %}",
@@ -396,6 +406,7 @@
         $(".step-1-2").hide();
         $(".step-4").show();
         $(".results-panel").append("<tbody>");
+        enableUploadButton();
         data.forEach(function(item) {
           $(".results-panel").append(
             `<tr><td><img src='${item.url}' style='width: 50px'></td><td>${item.canonicaltitle}</td><td><a href='${item.url}' target='_blank'>${item.url}</a></td></tr>`
@@ -405,6 +416,7 @@
       },
       error: function() {
         console.log("error");
+        enableUploadButton();
       }
     });
   }
