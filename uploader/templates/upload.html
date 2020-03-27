@@ -308,12 +308,13 @@
 
   function uploadFiles() {
     // Disable the button first.
-
-    $("#upload-button").toggleClass("disabled");
+    $("#upload-button").prop("disabled", true);
+    $("#upload-button i")
+      .removeClass("fa-caret-right")
+      .addClass("fa-spinner fa-spin");
     var fileData = {
       fileList: fileStagingTable.getData(),
-      token: oauthToken,
-      license: $("#wpLicense").val()
+      token: oauthToken
     };
 
     for (var x = 0; x < fileData["fileList"].length; x++) {
