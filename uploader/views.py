@@ -84,8 +84,9 @@ class FileUploadViewSet(views.APIView):
                 file_name=file["name"], file_stream=fh, description=file["description"]
             )
             if uploaded:
-                uploaded_results.append(image_info)
                 count += 1
+
+            uploaded_results.append(image_info)
         file_upload_log.number_of_files = count
         file_upload_log.save()
 

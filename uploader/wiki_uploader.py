@@ -36,15 +36,15 @@ class WikiUploader(object):
                 comment="Uploaded with Google drive to commons.",
             )
         except mwclient.errors.APIError as e:
-            if e.args[0] == "fileexists-no-change":
-                return False, {}
+            return False, {"error_msg": e.args[1], "title": file_name}
 
         debug_information = "Uploaded: {0} to: {1}, more information: {2}".format(
             file_name, self.mw_client.host, upload_result
         )
         logging.debug(debug_information)
         upload_response = upload_result.get("result")
+
         if not upload_response == "Success":
-            return False, {}
+            return False, {"error_msg": "Error while uploading", "title": file_name}
         else:
             return True, upload_result["imageinfo"]
