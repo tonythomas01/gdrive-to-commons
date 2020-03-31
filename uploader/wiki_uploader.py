@@ -23,13 +23,14 @@ class WikiUploader(object):
             access_secret=access_secret,
         )
 
-    def upload_file(self, file_name, file_stream, description=""):
+    def upload_file(self, file_name, file_stream, datecreated="", description=""):
         if not description:
             description = file_name
 
         upload_result = self.mw_client.upload(
             file=file_stream,
             filename=file_name,
+            datecreated=datecreated,
             description=description,
             ignore=True,
             comment="Uploaded with Google drive to commons.",
