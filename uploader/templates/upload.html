@@ -241,6 +241,16 @@
   var oauthToken;
   var fileStagingTable;
 
+function TDate() {
+var UserDate = document.getElementById("datecreated").value;
+var ToDate = new Date();
+
+if (new Date(UserDate).getTime() > ToDate.getTime()) {
+    alert("The Date created must be Less than or Equal to today's date");
+    return document.getElementById("datecreated").value = null;
+}
+return true;}  
+  
   // Use the Google API Loader script to load the google.picker script.
   function onGoogleUploadButtonClick() {
     gapi.load("auth", { callback: onAuthApiLoad });
@@ -325,6 +335,13 @@
             validator: "unique"
           },
           {
+            title: "DateCreated",
+            field: "datecreated",
+            formatter: function(cell, formatterParams, onRendered) {
+              return `{% include 'datepicker.html' %}`;
+            }
+          },           
+          {
             title: "Description",
             field: "description",
             editor: "textarea",
@@ -353,6 +370,13 @@
       token: oauthToken
     };
 
+    for (var x = 0; x < fileData["fileList"].length; x++) {
+      var sel = document.getElementById(
+        `DateCreated${fileData["fileList"][x]["id"]}`
+      );
+      fileData["fileList"][x]["datecreated"] = sel.value;
+    }     
+    
     function getCookie(name) {
       var cookieValue = null;
       if (document.cookie && document.cookie !== "") {
