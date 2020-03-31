@@ -45,6 +45,17 @@ class WikiUploader(object):
             return True, upload_result["imageinfo"]
 
 
-def get_initial_page_text(license="", summary=""):
+def get_initial_page_text(license="", summary="", category=""):
 
-    return "== Summary ==\n{0}\n== Licensing ==\n{{{{{1}}}}} ".format(summary, license)
+    return """=={{{{int:filedesc}}}}==
+{{{{Information|
+{{{{en|{0}}}}}
+}}}}
+
+=={{{{int:license-header}}}}==
+{{{{{1}}}}}
+
+[[Category:{2}]] 
+""".format(
+        summary, license, category
+    )
