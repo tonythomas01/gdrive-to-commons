@@ -30,10 +30,9 @@ class WikiUploader(object):
         upload_result = self.mw_client.upload(
             file=file_stream,
             filename=file_name,
-            datecreated=datecreated,
             description=description,
             ignore=True,
-            comment="Uploaded with Google drive to commons.",
+            comment=get_initial_page_text(datecreated, description),
         )
         debug_information = "Uploaded: {0} to: {1}, more information: {2}".format(
             file_name, self.mw_client.host, upload_result
@@ -44,3 +43,17 @@ class WikiUploader(object):
             return False, {}
         else:
             return True, upload_result["imageinfo"]
+        
+def get_initial_page_text(datecreated="", summary=""):
+
+    return """=={{{{int:filedesc}}}}==
+{{{{Information|
+{{{{en|{0}}}}}
+}}}}
+=={{{{int:license-header}}}}==
+{{{{{1}}}}}
+[[Category:{2}]] 
+""".format(
+        summary, datecreated
+    )        
+        
