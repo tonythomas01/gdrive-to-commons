@@ -21,7 +21,7 @@ For Wikimedia developers, you can find more information on development keys [her
 
 And also, the Google Drive to Wikimedia Commons Developer credentials are provided at the following link:
 https://phabricator.wikimedia.org/P10014 . <br/>
-Developers need not create new secret keys and can use the credentials given in the above link as as described later in this documentation under steps for local development.
+Developers need not create new secret keys and can use the credentials given in the above link as instructed later in this documentation under steps for local development.
 ## Steps for local development
 
 1. Create a local fork of https://github.com/tonythomas01/gdrive_to_commons using your GitHub account by running the          following command in terminal:
