@@ -48,7 +48,6 @@ class WikiUploader(object):
 def get_initial_page_text(
     license="", summary="", category="", date_of_creation="", source="", author=""
 ):
-    info_str = ""
     description = "|description=" + summary
     date_of_creation = "|date=" + date_of_creation
     source = "|source=" + source
