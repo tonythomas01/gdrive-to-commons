@@ -24,7 +24,7 @@ https://phabricator.wikimedia.org/P10014 . <br/>
 Developers need not create new secret keys and can use the credentials given in the above link as as described later in this documentation under steps for local development.
 ## Steps for local development
 
-1. Create a local fork of https://github.com/tonythomas01/gdrive_to_commons using your GitHub account by running      the following command in terminal:
+1. Create a local fork of https://github.com/tonythomas01/gdrive_to_commons using your GitHub account by running the          following command in terminal:
    ```
    $ git clone https://github.com/tonythomas01/gdrive_to_commons
    ```
@@ -69,23 +69,22 @@ Developers need not create new secret keys and can use the credentials given in 
    ```
    (gdrive-env-3.5.3) gdrive_to_commons/$
    ```
-   All the following commands are run in this environment and in this directory only
+   All the following commands are run in this environment and in this directory only.
    
 7. Install dependencies by running the following command:
    ```
    (gdrive-env-3.5.3) gdrive_to_commons/$ pip install -r requirements.txt
    ```
 8. We use pre-commit hooks to format code. install precommit framework by running the following command:
-   `(gdrive-env-3.5.3) gdrive_to_commons/$ pip install pre-commit`
+   `(gdrive-env-3.5.3) gdrive_to_commons/$ pip install pre-commit`<br/>
    Now, install our pre-commit hooks using: 
    `(gdrive-env-3.5.3) gdrive_to_commons/$ pre-commit install`
    
-9. There are some `localsettings` you need to have as part of running the
-   server. You can copy a template using:
-   `(gdrive-env-3.5.3) gdrive_to_commons/$ cp gdrive_to_commons/local_settings_sample.py        gdrive_to_commons/local_settings.py`
-   Few credentials have to be modified in `local_setting.py`
-   The credentials that are to be pasted in the `local_settings.py` are given in the following link:
-   https://phabricator.wikimedia.org/P10014 .
+9. There are some `localsettings` you need to have as part of running the server. You can copy a template using:
+   `(gdrive-env-3.5.3) gdrive_to_commons/$ cp gdrive_to_commons/local_settings_sample.py        gdrive_to_commons/local_settings.py` <br/>
+   Few credentials have to be modified in `local_setting.py` <br/>
+   The credentials that are to be pasted in the `local_settings.py` are given in the following link:<br/>
+   https://phabricator.wikimedia.org/P10014. <br/>
    Paste the Google Drive to Wikimedia Commons Dev credentials in `local_settings.py`
 
 10. Run the Django standard runserver steps:
