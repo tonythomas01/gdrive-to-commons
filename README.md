@@ -20,20 +20,19 @@ The tool authenticates to the Wikimedia cluster using Wikimedia OAuth and to Goo
 For Wikimedia developers, you can find more information on development keys [here](https://phabricator.wikimedia.org/T235969)
 
 And also, the Google Drive to Wikimedia Commons Developer credentials are provided at the following link:
-https://phabricator.wikimedia.org/P10014 .
+https://phabricator.wikimedia.org/P10014 . <br/>
 Developers need not create new secret keys and can use the credentials given in the above link as as described later in this documentation under steps for local development.
 ## Steps for local development
 
-1. Create a local fork of https://github.com/tonythomas01/gdrive_to_commons using your GitHub account by running      the following command in terminal
+1. Create a local fork of https://github.com/tonythomas01/gdrive_to_commons using your GitHub account by running      the following command in terminal:
    ```
    $ git clone https://github.com/tonythomas01/gdrive_to_commons
-
    ```
    
-2. If homebrew is not installed before, install homebrew package manager by following the instructions given in the    below link:
+2. If homebrew is not installed before, install homebrew package manager by following the instructions given in      the below link: <br/>
    https://docs.brew.sh/Homebrew-on-Linux   
    
-3. Install pyenv and virtual manager by running the following commands in terminal 
+3. Install pyenv and virtual manager by running the following commands in terminal: 
    ```
    $ brew install pyenv
    $ brew install pyenv-virtualenv
@@ -42,16 +41,15 @@ Developers need not create new secret keys and can use the credentials given in 
    $ eval "$(pyenv virtualenv-init -)"
    $ pyenv install 3.5.3
    $ eval "$(pyenv init -)"
-
    ```
    
 4. navigate into the repository by running the following command in terminal: 
    ```
    $ cd gdrive_to_commons   
    ```
-   Now the user is in the gdrive_to_commons directory and all the following commands are run in this directory.
+   Now you are in the `gdrive_to_commons` directory and all the following commands are run in this directory.
    
-5. Create pyenv-virtualenv by running the following command in terminal
+5. Create pyenv-virtualenv by running the following command in terminal:
    ```
    gdrive_to_commons/$ pyenv virtualenv 3.5.3 gdrive-env-3.5.3   
    ```
@@ -64,8 +62,8 @@ Developers need not create new secret keys and can use the credentials given in 
    ```
    gdrive_to_commons/$ pyenv activate gdrive-env-3.5.3
    ```
-   or,
-   there are better ways to do this if you follow https://github.com/pyenv/pyenv-virtualenv
+   or, <br/>
+   there are better ways to do this if you follow https://github.com/pyenv/pyenv-virtualenv.
    
    Now you are in the right environment if your terminal shows:
    ```
