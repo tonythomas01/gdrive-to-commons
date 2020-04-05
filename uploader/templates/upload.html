@@ -224,7 +224,7 @@
     if (pickerApiLoaded && oauthToken) {
       var view = new google.picker.DocsView().setIncludeFolders(true);
       view.setMimeTypes("image/jpeg,image/jpg,image/gif,image/png,image/bmp");
-      view.setParent('root');
+      view.setParent("root");
       var picker = new google.picker.PickerBuilder()
         .enableFeature(google.picker.Feature.NAV_HIDDEN)
         .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
@@ -374,7 +374,7 @@
         enableUploadButton();
         data.forEach(function(item) {
           $(".results-panel").append(
-            `<tr><td><img src='${item.url}' style='width: 50px'></td><td>${item.canonicaltitle}</td><td><a href='${item.url}' target='_blank'>${item.url}</a></td></tr>`
+            `<tr><td><img src='${item.url}' style='width: 50px'></td><td><a href='${item.descriptionurl}' target='_blank'>${item.canonicaltitle}</a></td></tr>`
           );
         });
         $(".results-panel").append("</tbody>");
