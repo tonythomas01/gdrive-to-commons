@@ -241,6 +241,29 @@
   var oauthToken;
   var fileStagingTable;
 
+  
+  function TDate() 
+  {
+    var dc = document.getElementById("DateCreated").value;
+    var Today = new Date();
+    var dd = Today.getDate(); 
+    var mm = Today.getMonth() + 1; //January is 0! 
+    var yyyy = Today.getFullYear(); 
+    if (dd < 10) 
+      { dd = '0' + dd; } 
+    if (mm < 10) 
+      { mm = '0' + mm; }
+    var dmy = yyyy+'-'+mm+'-'+dd;
+    if (new Date(dc).getTime() > Today.getTime()) 
+    {
+
+      alert("The Date created must be Less than or Equal to today's date");
+      //return document.getElementById("datecreated").value = null;
+      return DateCreated.value = dmy;
+    }
+    return true
+  }
+  
   // Use the Google API Loader script to load the google.picker script.
   function onGoogleUploadButtonClick() {
     gapi.load("auth", { callback: onAuthApiLoad });
@@ -332,6 +355,14 @@
             validator: "required"
           },
           {
+            title: "Date work was created or first published",
+            field: "datecreated",
+            width: 350,
+            formatter: function(cell, formatterParams, onRendered) {
+              return `{% include 'datepicker.html' %}`;
+            } 
+          },            
+          {
             formatter: "buttonCross",
             width: 40,
             align: "center",
@@ -354,6 +385,11 @@
       token: oauthToken
     };
 
+    for (var x = 0; x < fileData["fileList"].length; x++) {
+      var sel = document.getElementById(`DateCreated`);
+      fileData["fileList"][x]["DateCreated"] = sel.value;
+    }       
+    
     function getCookie(name) {
       var cookieValue = null;
       if (document.cookie && document.cookie !== "") {
