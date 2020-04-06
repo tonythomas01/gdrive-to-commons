@@ -210,6 +210,35 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">These files failed to Upload</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th scope="col">File Name</th>
+                                <th scope="col">Error Message</th>
+                            </tr>
+                        </thead>
+                        <tbody id="errorResponseContent">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 <!-- prettier-ignore -->
 {% endblock body %}
 <!-- prettier-ignore -->
@@ -244,7 +273,9 @@
 
   // Use the Google API Loader script to load the google.picker script.
   function onGoogleUploadButtonClick() {
-    gapi.load("auth", { callback: onAuthApiLoad });
+    if (oauthToken === undefined) {
+      gapi.load("auth", { callback: onAuthApiLoad });
+    }
     gapi.load("picker", { callback: onPickerApiLoad });
   }
 
@@ -292,6 +323,15 @@
   function generateGdriveThumbNailLink(itemId) {
     return `https://drive.google.com/thumbnail?authuser=0&sz=w50-h50&id=${itemId}`;
   }
+
+  function checkIfDataExists(data) {
+    if (data.length === 0) {
+      $(".step-3").hide();
+      $(".step-1-2").show();
+      pickedFiles = [];
+    }
+  }
+
   // A simple callback implementation.
   function pickerCallback(data) {
     if (data.action == google.picker.Action.PICKED) {
@@ -308,6 +348,7 @@
 
       fileStagingTable = new Tabulator("#picked-files-table", {
         data: pickedFiles,
+        dataEdited: checkIfDataExists,
         layout: "fitColumns",
         columns: [
           {
@@ -408,19 +449,33 @@
         $(".step-4").show();
         $(".results-panel").append("<tbody>");
         enableUploadButton();
+        responseModalBodyHtml = "";
         data.forEach(function(item) {
-          $(".results-panel").append(
-            `<tr><td><img src='${item.url}' style='width: 50px'></td><td>${item.canonicaltitle}</td><td><a href='${item.url}' target='_blank'>${item.url}</a></td></tr>`
-          );
+          if (!item.hasOwnProperty("error_msg")) {
+              $(".results-panel").append(
+                  `<tr><td><img src='${item.url}' style='width: 50px'></td><td>${item.canonicaltitle}</td><td><a href='${item.url}' target='_blank'>${item.url}</a></td></tr>`
+              );
+          } else {
+              responseModalBodyHtml += `
+                                            <tr class="table-danger">
+                                                  <th scope="col">${item.title}</th>
+                                                  <td scope="col" style="font-size: 0.75rem">${item.error_msg}</td>
+                                            </tr>
+                                        `
+          }
         });
+        if (responseModalBodyHtml.length > 0) {
+            $("#errorResponseContent").html(responseModalBodyHtml);
+            $("#exampleModalLong").modal('show');
+        }
         $(".results-panel").append("</tbody>");
       },
       error: function() {
-        console.log("error");
         enableUploadButton();
       }
     });
   }
+
 </script>
 <!-- prettier-ignore -->
 {% endblock scripts %}
