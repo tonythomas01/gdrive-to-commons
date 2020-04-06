@@ -31,8 +31,9 @@ class WikiUploader(object):
             file=file_stream,
             filename=file_name,
             description=description,
+            date_created = datecreated,
             ignore=True,
-            comment=get_initial_page_text(datecreated, description),
+            comment=get_initial_page_text(date_created, description),
         )
         debug_information = "Uploaded: {0} to: {1}, more information: {2}".format(
             file_name, self.mw_client.host, upload_result
@@ -44,7 +45,7 @@ class WikiUploader(object):
         else:
             return True, upload_result["imageinfo"]
 
-def get_initial_page_text(datecreated="", summary=""):
+def get_initial_page_text(date_created="", summary=""):
 
     return """=={{{{int:filedesc}}}}==
 {{{{Information|
@@ -54,5 +55,5 @@ def get_initial_page_text(datecreated="", summary=""):
 {{{{{1}}}}}
 [[Category:{2}]] 
 """.format(
-        summary, datecreated
+        summary, date_created
     )   
