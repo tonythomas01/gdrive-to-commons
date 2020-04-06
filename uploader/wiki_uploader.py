@@ -47,15 +47,15 @@ class WikiUploader(object):
 
 
 def get_initial_page_text(
-    license="", summary="", category="", date_of_creation="", source="", author=""
+    license=None, summary=None, category=None, date_of_creation=None, source=None, author=None
 ):
-    description = "|description=" + summary + "\n" if summary is not "" else ""
-    date_of_creation = (
-        "|date=" + date_of_creation + "\n" if date_of_creation is not "" else ""
-    )
-    source = "|source=" + source + "\n" if source is not "" else ""
-    author = "|author=" + author + "\n" if author is not "" else ""
-    category = "[[Category:{0}]] ".format(category) + "\n" if category is not "" else ""
+    description = "" if not summary else "|description={0}\n".format(summary)
+    date_of_creation = "" if not date_of_creation else "|date={0}\n".format(
+        date_of_creation)
+    source = "" if not source else "|source={0}\n".format(source)
+    author = "" if not author else "|author={0}\n".format(author)
+    category = "" if not category else "[[Category:{0}]] ".format(
+        category) + "\n"
 
     return """=={{{{int:filedesc}}}}==
 {{{{Information
