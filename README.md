@@ -26,7 +26,7 @@ Developers need not create new secret keys and can use the credentials given in 
 
 1. Create a local fork of https://github.com/tonythomas01/gdrive_to_commons using your GitHub account by running the          following command in terminal:
    ```
-   $ git clone https://github.com/tonythomas01/gdrive_to_commons
+   $  git clone https://github.com/username/gdrive-to-commons.git
    ```
    
 2. If homebrew is not installed before, install homebrew package manager by following the instructions given in      the below link: <br/>
