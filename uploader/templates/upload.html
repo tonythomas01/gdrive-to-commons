@@ -8,8 +8,12 @@
   rel="stylesheet"
   crossorigin="anonymous"
 />
+<link href="{% static 'tellme/feedback.min.css' %}" rel="stylesheet">
 {% endblock %} {% block body %}
 <!-- prettier-ignore -->
+<button type="button" id="feedback-btn" class="btn btn-info vertical-right-aligned">
+    Feedback <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
+</button>
 <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto step-3">
