@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "uploader",
     "rest_framework",
     "social_django",
+    "tellme",
 ]
 
 MIDDLEWARE = [
