@@ -31,7 +31,7 @@ class WikiUploader(object):
             file=file_stream,
             filename=file_name,
             description=description,
-            date_created = datecreated,
+            date_created = date_created,
             ignore=True,
             comment=get_initial_page_text(date_created, description),
         )
