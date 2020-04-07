@@ -43,7 +43,7 @@
                             <input type="checkbox" class="custom-control-input" id="imageCompress" value="false" />
                             <label class="custom-control-label" for="imageCompress">
                               <span>Do you want to compress the images before upload?
-              
+
                               </span></label>
                           </div>
 
@@ -282,8 +282,9 @@
   // Create and render a Picker object for searching images.
   function createPicker() {
     if (pickerApiLoaded && oauthToken) {
-      var view = new google.picker.View(google.picker.ViewId.DOCS);
-      view.setMimeTypes("image/png,image/jpeg,image/jpg");
+      var view = new google.picker.DocsView().setIncludeFolders(true);
+      view.setMimeTypes("image/jpeg,image/jpg,image/gif,image/png,image/bmp");
+      view.setParent('root');
       var picker = new google.picker.PickerBuilder()
         .enableFeature(google.picker.Feature.NAV_HIDDEN)
         .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
