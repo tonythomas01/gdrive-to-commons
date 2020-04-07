@@ -32,5 +32,6 @@ urlpatterns = [
     path(r"admin/", admin.site.urls),
     url(r"^api-auth/", include("rest_framework.urls")),
     url(r"^oauth/", include("social_django.urls", namespace="social")),
+    url(r'^tellme/', include("tellme.urls")),
     path("", HomePageView.as_view(), name="home_page"),
 ] + static(settings.STATIC_URL_DEPLOYMENT, document_root=settings.STATIC_ROOT)
