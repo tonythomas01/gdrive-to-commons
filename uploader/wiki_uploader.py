@@ -23,37 +23,54 @@ class WikiUploader(object):
             access_secret=access_secret,
         )
 
-    def upload_file(self, file_name, file_stream, description=""):
+    def upload_file(self, file_name, file_stream, date_created="", description="", license=""):
         if not description:
             description = file_name
 
         upload_result = self.mw_client.upload(
             file=file_stream,
             filename=file_name,
-            description=description,
-            date_created = date_created,
+            description=get_initial_page_text(license, date_created, description),
             ignore=True,
-            comment=get_initial_page_text(date_created, description),
+            comment=description,
         )
         debug_information = "Uploaded: {0} to: {1}, more information: {2}".format(
             file_name, self.mw_client.host, upload_result
         )
         logging.debug(debug_information)
         upload_response = upload_result.get("result")
+        logging.debug(upload_response)
         if not upload_response == "Success":
             return False, {}
         else:
             return True, upload_result["imageinfo"]
 
-def get_initial_page_text(date_created="", summary=""):
+def get_initial_page_text(
+    license=None,
+    summary=None,
+    category=None,
+    date_of_creation=None,
+    source=None,
+    author=None,
+):
+    description = "" if not summary else "|description={0}\n".format(summary)
+    date_of_creation = (
+        "" if not date_of_creation else "|date={0}\n".format(date_of_creation)
+    )
+    source = "" if not source else "|source={0}\n".format(source)
+    author = "" if not author else "|author={0}\n".format(author)
+    category = "" if not category else "[[Category:{0}]] ".format(category) + "\n"
 
     return """=={{{{int:filedesc}}}}==
-{{{{Information|
-{{{{en|{0}}}}}
+{{{{Information
+ {0}{1}{2}{3}
 }}}}
+
+
 =={{{{int:license-header}}}}==
-{{{{{1}}}}}
-[[Category:{2}]] 
+{{{{{4}}}}}
+{5}
 """.format(
-        summary, date_created
-    )   
+        description, date_of_creation, source, author, license, category
+    )
+

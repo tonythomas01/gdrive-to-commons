@@ -6,6 +6,7 @@ class FileSerializer(serializers.Serializer):
     id = fields.CharField(allow_blank=True)
     date_created = serializers.DateField(initial=datetime.date.today, format='', input_formats='')
     description = fields.CharField(max_length=200, allow_blank=True, allow_null=True)
+    license = fields.CharField(max_length=200, allow_blank=True, allow_null=True)
 
 
 class GooglePhotosUploadInputSerializer(serializers.Serializer):
