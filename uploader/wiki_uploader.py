@@ -39,7 +39,7 @@ class WikiUploader(object):
         )
         logging.debug(debug_information)
         upload_response = upload_result.get("result")
-        print(upload_response)
+        logging.debug(upload_response)
         if not upload_response == "Success":
             return False, {}
         else:
@@ -47,15 +47,20 @@ class WikiUploader(object):
 
 
 def get_initial_page_text(
-    license=None, summary=None, category=None, date_of_creation=None, source=None, author=None
+    license=None,
+    summary=None,
+    category=None,
+    date_of_creation=None,
+    source=None,
+    author=None,
 ):
     description = "" if not summary else "|description={0}\n".format(summary)
-    date_of_creation = "" if not date_of_creation else "|date={0}\n".format(
-        date_of_creation)
+    date_of_creation = (
+        "" if not date_of_creation else "|date={0}\n".format(date_of_creation)
+    )
     source = "" if not source else "|source={0}\n".format(source)
     author = "" if not author else "|author={0}\n".format(author)
-    category = "" if not category else "[[Category:{0}]] ".format(
-        category) + "\n"
+    category = "" if not category else "[[Category:{0}]] ".format(category) + "\n"
 
     return """=={{{{int:filedesc}}}}==
 {{{{Information
@@ -67,5 +72,5 @@ def get_initial_page_text(
 {{{{{4}}}}}
 {5}
 """.format(
-        description, date_of_creation, source, author, license, category,
+        description, date_of_creation, source, author, license, category
     )
