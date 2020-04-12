@@ -49,3 +49,4 @@ virtualenv==16.6.0
 Werkzeug==0.15.4
 zipp==0.5.1
 django-tellme==0.6.5
+Pillow==7.1.1
