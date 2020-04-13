@@ -8,8 +8,12 @@
   rel="stylesheet"
   crossorigin="anonymous"
 />
+<link href="{% static 'tellme/feedback.min.css' %}" rel="stylesheet">
 {% endblock %} {% block body %}
 <!-- prettier-ignore -->
+<button type="button" id="feedback-btn" class="btn btn-info vertical-right-aligned">
+    Feedback <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
+</button>
 <div class="container">
   <div class="row">
     <div class="col-lg-9 mx-auto step-3">
@@ -129,16 +133,17 @@
             The following files were uploaded!
           </h5>
 
-                      <div class="table-responsive mb-3">
-                        <table class="table mb-0 results-panel">
-                          <thead>
-                            <tr>
-                              <th style="width: 105px">Preview</th>
-                              <th>Name of file</th>
-                            </tr>
-                          </thead>
-                        </table>
-                      </div>
+          <div class="table-responsive mb-3">
+            <table class="table mb-0 results-panel">
+              <thead>
+                <tr>
+                  <th style="width: 105px">Preview</th>
+                  <th>Name of file</th>
+                  <th>Link to upload</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
 
           <a class="btn btn-lg btn-primary btn-block text-uppercase" href='{% url "upload_page" %}'>
             Upload more <i class="fas fa-caret-right"></i>
@@ -159,6 +164,7 @@
     </div>
   </div>
 </div>
+{%  include 'tellme/js_inc.html' %}  
 <!-- prettier-ignore -->
 {% endblock body %}
 <!-- prettier-ignore -->
@@ -223,7 +229,7 @@
     if (pickerApiLoaded && oauthToken) {
       var view = new google.picker.DocsView().setIncludeFolders(true);
       view.setMimeTypes("image/jpeg,image/jpg,image/gif,image/png,image/bmp");
-      view.setParent("root");
+      view.setParent('root');
       var picker = new google.picker.PickerBuilder()
         .enableFeature(google.picker.Feature.NAV_HIDDEN)
         .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
@@ -373,7 +379,7 @@
         enableUploadButton();
         data.forEach(function(item) {
           $(".results-panel").append(
-            `<tr><td><img src='${item.url}' style='width: 50px'></td><td><a href='${item.descriptionurl}' target='_blank'>${item.canonicaltitle}</a></td></tr>`
+            `<tr><td><img src='${item.url}' style='width: 50px'></td><td>${item.canonicaltitle}</td><td><a href='${item.url}' target='_blank'>${item.url}</a></td></tr>`
           );
         });
         $(".results-panel").append("</tbody>");
