@@ -282,6 +282,7 @@
       fileStagingTable = new Tabulator("#picked-files-table", {
         data: pickedFiles,
         layout: "fitColumns",
+        responsiveLayout:"collapse",
         columns: [
           {
             title: "File",
@@ -291,35 +292,41 @@
                 cell.getValue()
               )}'>`;
             },
-            width: 80
-          },
-          {
-            title: "License",
-            field: "license",
-            width: 300,
-            formatter: function(cell, formatterParams, onRendered) {
-              return `{% include 'licenses.html' %}`;
-            }
+            width: 80,
+            responsive:0,
           },
           {
             title: "Title",
             field: "name",
             editor: "input",
-            validator: "unique"
+            validator: "unique",
+            width: 200,
+            responsive:0,
           },
           {
             title: "Description",
             field: "description",
             editor: "textarea",
-            validator: "required"
+            validator: "required",
+            responsive:0,
+            width: 200,
+          },
+          {
+            title: "License",
+            field: "license",
+            width: 200,
+            formatter: function(cell, formatterParams, onRendered) {
+              return `{% include 'licenses.html' %}`;
+            },
           },
           {
             title: "Date work was created or first published",
             field: "date_created",
-            width: 350,
+            width: 300,
             formatter: function(cell, formatterParams, onRendered) {
               return `{% include 'datepicker.html' %}`;
-            } 
+            },
+            responsive:1, 
           },            
           {
             formatter: "buttonCross",
@@ -328,7 +335,8 @@
             headerSort: false,
             cellClick: function(e, cell) {
               cell.getRow().delete();
-            }
+            },
+            responsive:0,
           }
         ]
       });
