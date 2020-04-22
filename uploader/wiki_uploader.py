@@ -30,7 +30,11 @@ class WikiUploader(object):
         upload_result = self.mw_client.upload(
             file=file_stream,
             filename=file_name,
-            description=get_initial_page_text(license, date_created, description),
+            description=get_initial_page_text(
+                license=license,
+                date_of_creation=date_created,
+                summary=description
+            ),
             ignore=True,
             comment=description,
         )
