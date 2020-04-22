@@ -195,7 +195,7 @@
   
   function TDate() 
   {
-    var dc = document.getElementById("DateCreated").value;
+    var dc = document.getElementById("dateCreated").value;
     var Today = new Date();
     var dd = Today.getDate(); 
     var mm = Today.getMonth() + 1; //January is 0! 
@@ -210,7 +210,7 @@
 
       alert("The Date created must be Less than or Equal to today's date");
       //return document.getElementById("datecreated").value = null;
-      return DateCreated.value = dmy;
+      return dateCreated.value = dmy;
     }
     return true
   }
@@ -356,8 +356,8 @@
     };
 
     for (var x = 0; x < fileData["fileList"].length; x++) {
-      var sell = document.getElementById(`DateCreated`);
-      fileData["fileList"][x]["DateCreated"] = sell.value;
+      var sell = document.getElementById(`dateCreated`);
+      fileData["fileList"][x]["date_created"] = sell.value;
     }       
     
     for (var x = 0; x < fileData["fileList"].length; x++) {
