@@ -195,7 +195,7 @@
   
   function TDate() 
   {
-    var dc = document.getElementById("dateCreated").value;
+    var dc = document.getElementById(`wpDateCreated${fileData["fileList"][x]["id"]}`).value;
     var Today = new Date();
     var dd = Today.getDate(); 
     var mm = Today.getMonth() + 1; //January is 0! 
@@ -210,7 +210,7 @@
 
       alert("The Date created must be Less than or Equal to today's date");
       //return document.getElementById("datecreated").value = null;
-      return dateCreated.value = dmy;
+      return wpDateCreated${fileData["fileList"][x]["id"]}.value = dmy;
     }
     return true
   }
@@ -356,7 +356,9 @@
     };
 
     for (var x = 0; x < fileData["fileList"].length; x++) {
-      var sell = document.getElementById(`dateCreated`);
+      var sell = document.getElementById(
+        `wpDateCreated${fileData["fileList"][x]["id"]}`
+      );
       fileData["fileList"][x]["date_created"] = sell.value;
     }       
     
