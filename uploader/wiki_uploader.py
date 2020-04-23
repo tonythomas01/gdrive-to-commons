@@ -23,14 +23,18 @@ class WikiUploader(object):
             access_secret=access_secret,
         )
 
-    def upload_file(self, file_name, file_stream, description="", license=""):
+    def upload_file(self, file_name, file_stream, date_created="", description="", license=""):
         if not description:
             description = file_name
 
         upload_result = self.mw_client.upload(
             file=file_stream,
             filename=file_name,
-            description=get_initial_page_text(license, description),
+            description=get_initial_page_text(
+                license=license,
+                date_of_creation=date_created,
+                summary=description
+            ),
             ignore=True,
             comment=description,
         )
@@ -44,7 +48,6 @@ class WikiUploader(object):
             return False, {}
         else:
             return True, upload_result["imageinfo"]
-
 
 def get_initial_page_text(
     license=None,
@@ -74,3 +77,4 @@ def get_initial_page_text(
 """.format(
         description, date_of_creation, source, author, license, category
     )
+

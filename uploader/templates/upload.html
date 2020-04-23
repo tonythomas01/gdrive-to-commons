@@ -12,7 +12,7 @@
 <!-- prettier-ignore -->
 <div class="container">
   <div class="row">
-    <div class="col-lg-9 mx-auto step-3">
+    <div class="col-lg-14 mx-auto step-3">
       <div class="card card-signin my-5">
         <div class="card-body">
           <div class="row logo-row col-xs-12">
@@ -129,16 +129,17 @@
             The following files were uploaded!
           </h5>
 
-                      <div class="table-responsive mb-3">
-                        <table class="table mb-0 results-panel">
-                          <thead>
-                            <tr>
-                              <th style="width: 105px">Preview</th>
-                              <th>Name of file</th>
-                            </tr>
-                          </thead>
-                        </table>
-                      </div>
+          <div class="table-responsive mb-3">
+            <table class="table mb-0 results-panel">
+              <thead>
+                <tr>
+                  <th style="width: 105px">Preview</th>
+                  <th>Name of file</th>
+                  <th>Link to upload</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
 
           <a class="btn btn-lg btn-primary btn-block text-uppercase" href='{% url "upload_page" %}'>
             Upload more <i class="fas fa-caret-right"></i>
@@ -191,6 +192,29 @@
   var oauthToken;
   var fileStagingTable;
 
+  
+  function TDate() 
+  {
+    var dc = document.getElementById(`wpDateCreated`).value;
+    var Today = new Date();
+    var dd = Today.getDate(); 
+    var mm = Today.getMonth() + 1; //January is 0! 
+    var yyyy = Today.getFullYear(); 
+    if (dd < 10) 
+      { dd = '0' + dd; } 
+    if (mm < 10) 
+      { mm = '0' + mm; }
+    var dmy = yyyy+'-'+mm+'-'+dd;
+    if (new Date(dc).getTime() > Today.getTime()) 
+    {
+
+      alert("The Date created must be Less than or Equal to today's date");
+      //return document.getElementById("datecreated").value = null;
+      return wpDateCreated.value = dmy;
+    }
+    return true
+  }
+  
   // Use the Google API Loader script to load the google.picker script.
   function onGoogleUploadButtonClick() {
     gapi.load("auth", { callback: onAuthApiLoad });
@@ -223,7 +247,7 @@
     if (pickerApiLoaded && oauthToken) {
       var view = new google.picker.DocsView().setIncludeFolders(true);
       view.setMimeTypes("image/jpeg,image/jpg,image/gif,image/png,image/bmp");
-      view.setParent("root");
+      view.setParent('root');
       var picker = new google.picker.PickerBuilder()
         .enableFeature(google.picker.Feature.NAV_HIDDEN)
         .enableFeature(google.picker.Feature.MULTISELECT_ENABLED)
@@ -258,6 +282,7 @@
       fileStagingTable = new Tabulator("#picked-files-table", {
         data: pickedFiles,
         layout: "fitColumns",
+        responsiveLayout:"collapse",
         columns: [
           {
             title: "File",
@@ -267,28 +292,42 @@
                 cell.getValue()
               )}'>`;
             },
-            width: 80
-          },
-          {
-            title: "License",
-            field: "license",
-            width: 300,
-            formatter: function(cell, formatterParams, onRendered) {
-              return `{% include 'licenses.html' %}`;
-            }
+            width: 80,
+            responsive:0,
           },
           {
             title: "Title",
             field: "name",
             editor: "input",
-            validator: "unique"
+            validator: "unique",
+            width: 200,
+            responsive:0,
           },
           {
             title: "Description",
             field: "description",
             editor: "textarea",
-            validator: "required"
+            validator: "required",
+            responsive:0,
+            width: 200,
           },
+          {
+            title: "License",
+            field: "license",
+            width: 200,
+            formatter: function(cell, formatterParams, onRendered) {
+              return `{% include 'licenses.html' %}`;
+            },
+          },
+          {
+            title: "Date of Creation (first published)",
+            field: "date_created",
+            width: 300,
+            formatter: function(cell, formatterParams, onRendered) {
+              return `{% include 'datepicker.html' %}`;
+            },
+            responsive:1, 
+          },            
           {
             formatter: "buttonCross",
             width: 40,
@@ -296,7 +335,8 @@
             headerSort: false,
             cellClick: function(e, cell) {
               cell.getRow().delete();
-            }
+            },
+            responsive:0,
           }
         ]
       });
@@ -315,6 +355,13 @@
       token: oauthToken
     };
 
+    for (var x = 0; x < fileData["fileList"].length; x++) {
+      var sell = document.getElementById(
+        `wpDateCreated${fileData["fileList"][x]["id"]}`
+      );
+      fileData["fileList"][x]["date_created"] = sell.value;
+    }       
+    
     for (var x = 0; x < fileData["fileList"].length; x++) {
       var sel = document.getElementById(
         `wpLicense${fileData["fileList"][x]["id"]}`
@@ -373,7 +420,7 @@
         enableUploadButton();
         data.forEach(function(item) {
           $(".results-panel").append(
-            `<tr><td><img src='${item.url}' style='width: 50px'></td><td><a href='${item.descriptionurl}' target='_blank'>${item.canonicaltitle}</a></td></tr>`
+            `<tr><td><img src='${item.url}' style='width: 50px'></td><td>${item.canonicaltitle}</td><td><a href='${item.url}' target='_blank'>${item.url}</a></td></tr>`
           );
         });
         $(".results-panel").append("</tbody>");

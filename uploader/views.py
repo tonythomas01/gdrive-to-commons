@@ -81,8 +81,10 @@ class FileUploadViewSet(views.APIView):
                 download_status, done = downloader.next_chunk()
 
             uploaded, image_info = wiki_uploader.upload_file(
+
                 file_name=file["name"],
                 file_stream=fh,
+                date_created=file["date_created"],
                 description=file["description"],
                 license=file["license"],
             )
