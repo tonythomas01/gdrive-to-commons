@@ -41,6 +41,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
+    "csp.middleware.CSPMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -115,5 +116,21 @@ LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "upload_page"
 LOGOUT_REDIRECT_URL = "home_page"
 SOCIAL_AUTH_URL_NAMESPACE = "social"
+
+CSP_DEFAULT_SRC = ("'self'", "*.google.com   ")
+CSP_STYLE_SRC = ("'self'", "'unsafe-inline'")
+CSP_SCRIPT_SRC = ("'self'", "'unsafe-inline'", "*.google.com")
+CSP_IMG_SRC = (
+    "'self'",
+    "www.w3.org",
+    "data:",
+    "*.google.com",
+    "*.googleusercontent.com",
+)
+CSP_FRAME_SRC = ("'self'", "'unsafe-inline'", "*.google.com")
+CSP_FONT_SRC = (
+    "'self'",
+    "'unsafe-inline'",
+)
 
 from gdrive_to_commons.local_settings import *
