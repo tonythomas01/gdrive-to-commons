@@ -95,9 +95,12 @@ class FileUploadViewSet(views.APIView):
             )
 
             uploaded, image_info = wiki_uploader.upload_file(
-                file_name=file["name"],
                 file_stream=fh_resized,
                 description=file["description"],
+                file_name=file["name"],
+                date_created=file["date_created"],
+                description=file["description"],
+                license=file["license"],
             )
             if uploaded:
                 uploaded_results.append(image_info)
