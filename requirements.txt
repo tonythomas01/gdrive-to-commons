@@ -15,7 +15,7 @@ google-api-python-client==1.7.8
 google-auth==1.6.3
 google-auth-httplib2==0.0.3
 google-auth-oauthlib==0.3.0
-httplib2==0.12.3
+httplib2==0.18.0
 identify==1.4.3
 idna==2.8
 importlib-metadata==0.12
