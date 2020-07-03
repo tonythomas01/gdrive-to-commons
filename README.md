@@ -6,7 +6,7 @@ This tool is developed to Upload images directly from Google drive to Wikimedia 
 
 ## ⚠️ Contributing ⚠️
 
-Development and codebase moved to [Wikimedia Gerrit](https://gerrit.wikimedia.org/r/admin/repos/labs/tools/gdrive-to-commons,branches). This repo is read only now. Read how to contribute on the [Gerrit Tutorial](https://www.mediawiki.org/wiki/Gerrit/Tutorial). Thank you! 
+Development and codebase moved to [Wikimedia Gerrit](https://gerrit.wikimedia.org/r/admin/repos/labs/tools/gdrive-to-commons). This repo is read only now. Read how to contribute on the [Gerrit Tutorial](https://www.mediawiki.org/wiki/Gerrit/Tutorial). Thank you! 
 
 ## Dependencies
 
