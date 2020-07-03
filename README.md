@@ -1,8 +1,12 @@
-# Google drive to Wikimedia Commons
+# Google drive to Wikimedia Commons (Read only)
 
 [![Build Status](https://travis-ci.com/tonythomas01/gdrive-to-commons.svg?branch=master)](https://travis-ci.com/tonythomas01/gdrive-to-commons)
 
 This tool is developed to Upload images directly from Google drive to Wikimedia Commons and is currently deployed at [Toollabs](https://tools.wmflabs.org/google-drive-photos-to-commons/).
+
+## ⚠️ Contributing ⚠️
+
+Development and codebase moved to [Wikimedia Gerrit](https://gerrit.wikimedia.org/r/admin/repos/labs/tools/gdrive-to-commons,branches). This repo is read only now. Read how to contribute on the [Gerrit Tutorial](https://www.mediawiki.org/wiki/Gerrit/Tutorial). Thank you! 
 
 ## Dependencies
 
