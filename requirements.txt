@@ -6,7 +6,7 @@ cfgv==1.6.0
 chardet==3.0.4
 Click==7.0
 defusedxml==0.6.0
-Django==2.2.10
+Django==2.2.24
 django-csp==3.6
 djangorestframework==3.9.4
 Flask==1.0.3
