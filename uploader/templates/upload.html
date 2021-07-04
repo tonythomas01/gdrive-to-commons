@@ -192,7 +192,7 @@
   var oauthToken;
   var fileStagingTable;
 
-  
+
   function TDate() 
   {
     var dc = document.getElementById(`wpDateCreated`).value;
@@ -282,6 +282,7 @@
       fileStagingTable = new Tabulator("#picked-files-table", {
         data: pickedFiles,
         layout: "fitColumns",
+
         responsiveLayout:"collapse",
         columns: [
           {
@@ -292,6 +293,8 @@
                 cell.getValue()
               )}'>`;
             },
+
+
             width: 80,
             responsive:0,
           },
@@ -330,14 +333,17 @@
             headerSort:false,
           },            
           {
+
             formatter: "buttonCross",
             width: 40,
             align: "center",
             headerSort: false,
             cellClick: function(e, cell) {
               cell.getRow().delete();
+
             },
             responsive:0,
+
           }
         ]
       });
@@ -352,7 +358,8 @@
       .removeClass("fa-caret-right")
       .addClass("fa-spinner fa-spin");
     var fileData = {
-      fileList: fileStagingTable.getData(),
+      fileList: fileStagingTable.getData(),    
+      compress: $("#imageCompress").is(":checked"),
       token: oauthToken
     };
 
@@ -369,6 +376,7 @@
       );
       fileData["fileList"][x]["license"] = sel.value;
     }
+
 
     function getCookie(name) {
       var cookieValue = null;

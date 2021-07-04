@@ -11,6 +11,8 @@ from rest_framework.response import Response
 from uploader.serializers import GooglePhotosUploadInputSerializer
 from uploader.wiki_uploader import WikiUploader
 
+from uploader.utils import resize_image
+from PIL import Image
 from uploader.models import FileUpload
 
 
@@ -55,6 +57,7 @@ class FileUploadViewSet(views.APIView):
         drive_service = self.get_google_drive_service(
             access_token=validated_data.get("token", None)
         )
+        compress = validated_data.get("compress", False)
         social_auth = self.request.user.social_auth.get(
             provider="mediawiki"
         ).extra_data["access_token"]
@@ -80,10 +83,21 @@ class FileUploadViewSet(views.APIView):
             while done is False:
                 download_status, done = downloader.next_chunk()
 
-            uploaded, image_info = wiki_uploader.upload_file(
+            image = Image.open(fh)
 
+            if compress:
+                image = resize_image(image)
+
+            fh_resized = io.BytesIO()
+            image.save(
+                fh_resized,
+                Image.registered_extensions()["." + file["name"].split(".")[-1]],
+            )
+
+            uploaded, image_info = wiki_uploader.upload_file(
+                file_stream=fh_resized,
+                description=file["description"],
                 file_name=file["name"],
-                file_stream=fh,
                 date_created=file["date_created"],
                 description=file["description"],
                 license=file["license"],
